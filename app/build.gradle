@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.apollographql.apollo3'
 }
 
 ext {
@@ -11,12 +12,12 @@ ext {
 
 android {
     namespace 'com.example.anirecord'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.anirecord"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -44,6 +45,9 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
@@ -60,4 +64,11 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$NAV_VERSION"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$NAV_VERSION"
     androidTestImplementation "androidx.navigation:navigation-testing:$NAV_VERSION"
+
+    // Apollo GraphQL
+    implementation "com.apollographql.apollo3:apollo-runtime:$APOLLO_VERSION"
+}
+
+apollo {
+    packageName.set("com.example.anirecord")
 }
