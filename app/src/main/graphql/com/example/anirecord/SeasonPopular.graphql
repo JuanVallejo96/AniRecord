@@ -7,9 +7,10 @@ query SeasonPopular($page: Int!, $year: Int!, $season: MediaSeason!) {
             id
             title {
                 english
+                romaji
             }
             coverImage {
-                medium
+                large
                 color
             }
         }
