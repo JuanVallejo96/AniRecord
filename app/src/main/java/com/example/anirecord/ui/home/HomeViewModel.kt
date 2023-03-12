@@ -34,10 +34,8 @@ class HomeViewModel : ViewModel(), KoinComponent {
                 page,
             )?.let { (newItems, hasNextPage) ->
                 continueLoading = hasNextPage
-                viewModelScope.launch(Dispatchers.Main) {
-                    items.value = newItems
-                    page++
-                }
+                items.postValue(newItems)
+                page++
             }
         }
     }
