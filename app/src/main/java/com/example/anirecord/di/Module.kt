@@ -4,12 +4,14 @@ import androidx.room.Room
 import com.apollographql.apollo3.ApolloClient
 import com.example.anirecord.Constants
 import com.example.anirecord.data.database.CollectionsDatabase
-import com.example.anirecord.data.repository.CollectionsRepositoryImpl
 import com.example.anirecord.domain.repository.CollectionsRepository
+import com.example.anirecord.domain.repository.CollectionsRepositoryImpl
 import com.example.anirecord.domain.repository.SeriesRepository
 import com.example.anirecord.domain.repository.SeriesRepositoryImpl
 import com.example.anirecord.domain.usecase.GetPopularUseCase
 import com.example.anirecord.domain.usecase.GetPopularUseCaseImpl
+import com.example.anirecord.domain.usecase.GetTagsUseCase
+import com.example.anirecord.domain.usecase.GetTagsUseCaseImpl
 import com.example.anirecord.ui.home.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
@@ -50,7 +52,7 @@ private val databaseModule = module {
 }
 
 private val repositoryModule = module {
-    single<CollectionsRepository> { CollectionsRepositoryImpl(get(), get()) }
+    single<CollectionsRepository> { CollectionsRepositoryImpl(get(), get(), get()) }
     single<SeriesRepository> { SeriesRepositoryImpl(get()) }
 }
 
@@ -60,4 +62,5 @@ private val viewModelModule = module {
 
 private val useCaseModule = module {
     single<GetPopularUseCase> { GetPopularUseCaseImpl(get()) }
+    single<GetTagsUseCase> { GetTagsUseCaseImpl(get()) }
 }

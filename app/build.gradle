@@ -10,6 +10,7 @@ plugins {
 ext {
     KOIN_ANDROID_VERSION = '3.3.3'
     ROOM_VERSION = '2.5.0'
+    LIFECYCLE_VERSION = '2.6.0'
 }
 
 android {
@@ -38,8 +39,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -52,8 +53,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$LIFECYCLE_VERSION"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$LIFECYCLE_VERSION"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -75,6 +76,7 @@ dependencies {
 
     // Room
     implementation "androidx.room:room-runtime:$ROOM_VERSION"
+    implementation "androidx.room:room-ktx:$ROOM_VERSION"
     annotationProcessor "androidx.room:room-compiler:$ROOM_VERSION"
     kapt "androidx.room:room-compiler:$ROOM_VERSION"
     testImplementation "androidx.room:room-testing:$ROOM_VERSION"

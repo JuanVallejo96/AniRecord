@@ -9,10 +9,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = Constants.COLLECTIONS_DB_TAG_TABLE_NAME)
-data class Tag(
+data class MediaTag(
     @PrimaryKey
     val id: Int,
     override val name: String,
-    override val description: String,
-    val category: String,
+    override val description: String?,
+    override val category: String?,
 ) : Parcelable, TagModel
