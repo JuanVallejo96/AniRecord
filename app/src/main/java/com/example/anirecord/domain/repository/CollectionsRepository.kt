@@ -3,9 +3,11 @@ package com.example.anirecord.domain.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.apollographql.apollo3.ApolloClient
+import com.example.anirecord.GenresQuery
 import com.example.anirecord.TagsQuery
 import com.example.anirecord.data.database.GenreDao
 import com.example.anirecord.data.database.TagDao
+import com.example.anirecord.data.model.Genre
 import com.example.anirecord.domain.model.TagModel
 import com.example.anirecord.domain.model.asDbModel
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +17,8 @@ interface CollectionsRepository {
     suspend fun getTags(): LiveData<List<TagModel>>
 
     suspend fun refreshTags()
+
+    suspend fun refreshGenres()
 }
 
 class CollectionsRepositoryImpl(
@@ -33,6 +37,15 @@ class CollectionsRepositoryImpl(
             ?.map(TagsQuery.MediaTagCollection::asDbModel)
             ?.let { tags ->
                 tagDao.insertAll(*tags.toTypedArray())
+            }
+    }
+
+    override suspend fun refreshGenres(): Unit = withContext(Dispatchers.IO) {
+        apolloClient.query(GenresQuery()).execute().data?.GenreCollection
+            ?.filterNotNull()
+            ?.map { Genre(it) }
+            ?.let { genres ->
+                genreDao.insertAll(*genres.toTypedArray())
             }
     }
 }
