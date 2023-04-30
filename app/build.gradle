@@ -7,12 +7,6 @@ plugins {
     id 'kotlin-parcelize'
 }
 
-ext {
-    KOIN_ANDROID_VERSION = '3.3.3'
-    ROOM_VERSION = '2.5.0'
-    LIFECYCLE_VERSION = '2.6.0'
-}
-
 android {
     namespace 'com.example.anirecord'
     compileSdk 33
@@ -43,49 +37,48 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_17
     }
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$LIFECYCLE_VERSION"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$LIFECYCLE_VERSION"
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation "androidx.appcompat:appcompat:$androidxAppcompatVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$androidConstraintLayoutVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
 
     // Navigation component support
-    implementation "androidx.navigation:navigation-fragment-ktx:$NAV_VERSION"
-    implementation "androidx.navigation:navigation-ui-ktx:$NAV_VERSION"
-    implementation "androidx.navigation:navigation-dynamic-features-fragment:$NAV_VERSION"
-    androidTestImplementation "androidx.navigation:navigation-testing:$NAV_VERSION"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$navVersion"
+    androidTestImplementation "androidx.navigation:navigation-testing:$navVersion"
 
     // Koin main features for Android
-    implementation "io.insert-koin:koin-android:$KOIN_ANDROID_VERSION"
+    implementation "io.insert-koin:koin-android:$koinVersion"
     // Java Compatibility
-    implementation "io.insert-koin:koin-android-compat:$KOIN_ANDROID_VERSION"
+    implementation "io.insert-koin:koin-android-compat:$koinVersion"
     // Jetpack WorkManager
-    implementation "io.insert-koin:koin-androidx-workmanager:$KOIN_ANDROID_VERSION"
+    implementation "io.insert-koin:koin-androidx-workmanager:$koinVersion"
     // Navigation Graph
-    implementation "io.insert-koin:koin-androidx-navigation:$KOIN_ANDROID_VERSION"
+    implementation "io.insert-koin:koin-androidx-navigation:$koinVersion"
 
     // Room
-    implementation "androidx.room:room-runtime:$ROOM_VERSION"
-    implementation "androidx.room:room-ktx:$ROOM_VERSION"
-    annotationProcessor "androidx.room:room-compiler:$ROOM_VERSION"
-    kapt "androidx.room:room-compiler:$ROOM_VERSION"
-    testImplementation "androidx.room:room-testing:$ROOM_VERSION"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    testImplementation "androidx.room:room-testing:$roomVersion"
 
     // Apollo GraphQL
-    implementation "com.apollographql.apollo3:apollo-runtime:$APOLLO_VERSION"
+    implementation "com.apollographql.apollo3:apollo-runtime:$apolloVersion"
 
     // Picasso
-    implementation 'com.squareup.picasso:picasso:2.8'
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
 }
 
 apollo {

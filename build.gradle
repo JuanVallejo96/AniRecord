@@ -1,22 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext {
-        NAV_VERSION = "2.5.3"
-        APOLLO_VERSION = '3.7.4'
-    }
     repositories {
         google()
     }
     dependencies {
         // Navigation component safe args
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$NAV_VERSION"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion"
     }
 }
 
 plugins {
-    id 'com.android.application' version '7.4.2' apply false
-    id 'com.android.library' version '7.4.2' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
-    id 'org.jetbrains.kotlin.kapt' version '1.7.20' apply false
-    id 'com.apollographql.apollo3' version "$APOLLO_VERSION" apply false
+    id 'com.android.application' version "$androidGradlePluginVersion" apply false
+    id 'com.android.library' version "$androidGradlePluginVersion" apply false
+    id 'org.jetbrains.kotlin.android' version "$kotlinAndroidVersion" apply false
+    id 'org.jetbrains.kotlin.kapt' version "$kotlinAndroidVersion" apply false
+    id 'com.apollographql.apollo3' version "$apolloVersion" apply false
 }
