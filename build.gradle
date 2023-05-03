@@ -2,10 +2,13 @@
 buildscript {
     repositories {
         google()
+        mavenCentral()
     }
+
     dependencies {
         // Navigation component safe args
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinAndroidVersion"
     }
 }
 
