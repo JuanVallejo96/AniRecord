@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.anirecord.Constants
-import com.example.anirecord.data.model.MediaTag
+import com.example.anirecord.data.entity.MediaTag
 
 @Dao
 interface TagDao {

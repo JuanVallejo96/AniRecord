@@ -1,0 +1,27 @@
+query ShowDetail($showId: Int!) {
+    Media(id: $showId) {
+        id
+        title {
+            english
+            romaji
+        }
+        description
+        coverImage {
+            extraLarge
+        }
+        bannerImage
+        averageScore
+        episodes
+        season
+        seasonYear
+        nextAiringEpisode {
+            airingAt
+            episode
+            media {
+                coverImage {
+                    large
+                }
+            }
+        }
+    }
+}

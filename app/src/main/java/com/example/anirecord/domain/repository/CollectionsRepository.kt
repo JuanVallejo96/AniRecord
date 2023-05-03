@@ -7,14 +7,19 @@ import com.example.anirecord.GenresQuery
 import com.example.anirecord.TagsQuery
 import com.example.anirecord.data.database.GenreDao
 import com.example.anirecord.data.database.TagDao
-import com.example.anirecord.data.model.Genre
-import com.example.anirecord.domain.model.TagModel
-import com.example.anirecord.domain.model.asDbModel
+import com.example.anirecord.data.entity.Genre
+import com.example.anirecord.data.entity.MediaTag
+import com.example.anirecord.domain.model.GenreModel
+import com.example.anirecord.domain.model.MediaTagModel
+import com.example.anirecord.domain.model.extensions.toEntity
+import com.example.anirecord.domain.model.extensions.toModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 interface CollectionsRepository {
-    suspend fun getTags(): LiveData<List<TagModel>>
+    suspend fun getTags(): LiveData<List<MediaTagModel>>
+
+    suspend fun getGenres(): LiveData<List<GenreModel>>
 
     suspend fun refreshTags()
 
@@ -24,17 +29,24 @@ interface CollectionsRepository {
 class CollectionsRepositoryImpl(
     private val apolloClient: ApolloClient,
     private val genreDao: GenreDao,
-    private val tagDao: TagDao
+    private val tagDao: TagDao,
 ) : CollectionsRepository {
-    override suspend fun getTags(): LiveData<List<TagModel>> {
-        // Kotlin says fuck polymorphism if not mapped
-        return tagDao.getAll().map { it }
+    override suspend fun getTags(): LiveData<List<MediaTagModel>> {
+        return tagDao.getAll().map {
+            it.map(MediaTag::toModel)
+        }
+    }
+
+    override suspend fun getGenres(): LiveData<List<GenreModel>> {
+        return genreDao.getAll().map {
+            it.map(Genre::toModel)
+        }
     }
 
     override suspend fun refreshTags(): Unit = withContext(Dispatchers.IO) {
         apolloClient.query(TagsQuery()).execute().data?.MediaTagCollection
             ?.filterNotNull()
-            ?.map(TagsQuery.MediaTagCollection::asDbModel)
+            ?.map(TagsQuery.MediaTagCollection::toEntity)
             ?.let { tags ->
                 tagDao.insertAll(*tags.toTypedArray())
             }

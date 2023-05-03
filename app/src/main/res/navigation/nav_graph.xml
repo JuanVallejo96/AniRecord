@@ -9,5 +9,21 @@
         android:id="@+id/homeFragment"
         android:name="com.example.anirecord.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/navToDetail"
+            app:destination="@id/showDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/showDetailFragment"
+        android:name="com.example.anirecord.ui.showdetail.ShowDetailFragment"
+        android:label="fragment_show_detail"
+        tools:layout="@layout/fragment_show_detail">
+        <argument
+            android:name="showId"
+            app:argType="integer"
+            app:nullable="false" />
+    </fragment>
 </navigation>
