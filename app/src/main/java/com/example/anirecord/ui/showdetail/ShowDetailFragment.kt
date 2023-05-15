@@ -26,11 +26,11 @@ class ShowDetailFragment : Fragment() {
 
         vm.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
-                is ShowDetailUiState.Loading -> {
+                is ShowDetailViewModel.UiState.Loading -> {
                     //TODO("Spinner (?)")
                 }
 
-                is ShowDetailUiState.Success -> {
+                is ShowDetailViewModel.UiState.Success -> {
                     //val show = uiState.show
                     //TODO("Update view")
                 }

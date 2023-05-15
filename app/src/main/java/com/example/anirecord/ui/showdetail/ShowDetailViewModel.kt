@@ -13,21 +13,21 @@ import org.koin.core.component.inject
 
 class ShowDetailViewModel(private val id: Int) : ViewModel(), KoinComponent {
     private val getShowDetailUseCase: GetShowDetailUseCase by inject()
-    private val _uiState = MutableLiveData<ShowDetailUiState>(ShowDetailUiState.Loading)
+    private val _uiState = MutableLiveData<UiState>(UiState.Loading)
 
-    val uiState get(): LiveData<ShowDetailUiState> = _uiState
+    val uiState get(): LiveData<UiState> = _uiState
 
     init {
         load()
     }
 
     private fun load() = viewModelScope.launch(Dispatchers.IO) {
-        val show = getShowDetailUseCase.invoke(id)
-        _uiState.postValue(ShowDetailUiState.Success(show))
+        val show = getShowDetailUseCase(id)
+        _uiState.postValue(UiState.Success(show))
     }
-}
 
-sealed class ShowDetailUiState {
-    data class Success(val show: ShowDetailModel) : ShowDetailUiState()
-    object Loading : ShowDetailUiState()
+    sealed class UiState {
+        data class Success(val show: ShowDetailModel) : UiState()
+        object Loading : UiState()
+    }
 }
