@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.anirecord.ui.home.HomeFragment"
-        android:label="fragment_home"
+        android:label="@string/label_home"
         tools:layout="@layout/fragment_home">
 
         <action
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/showDetailFragment"
         android:name="com.example.anirecord.ui.showdetail.ShowDetailFragment"
-        android:label="fragment_show_detail"
+        android:label="@string/label_show_detail"
         tools:layout="@layout/fragment_show_detail">
         <argument
             android:name="showId"

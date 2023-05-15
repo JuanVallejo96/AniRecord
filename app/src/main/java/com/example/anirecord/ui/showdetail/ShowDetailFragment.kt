@@ -31,7 +31,7 @@ class ShowDetailFragment : Fragment() {
                 }
 
                 is ShowDetailUiState.Success -> {
-                    val show = uiState.show
+                    //val show = uiState.show
                     //TODO("Update view")
                 }
             }
