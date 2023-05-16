@@ -7,18 +7,20 @@ import androidx.lifecycle.viewModelScope
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.usecase.GetPopularUseCase
 import com.example.anirecord.ui.utils.Utils
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.util.Calendar
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel(), KoinComponent {
-    private val getPopularUseCase: GetPopularUseCase by inject()
-
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getPopularUseCase: GetPopularUseCase
+) : ViewModel() {
     private var page = 1
     private var continueLoading = true
-    private val items = MutableLiveData<List<ShowListItemModel>>(mutableListOf())
+    private val loadedItems: MutableList<ShowListItemModel> = mutableListOf()
+    private val items = MutableLiveData<List<ShowListItemModel>>(loadedItems)
     val shows: LiveData<List<ShowListItemModel>> get() = items
 
     init {
@@ -34,7 +36,8 @@ class HomeViewModel : ViewModel(), KoinComponent {
                 page,
             )?.let { (newItems, hasNextPage) ->
                 continueLoading = hasNextPage
-                items.postValue(newItems)
+                loadedItems.addAll(newItems)
+                items.postValue(loadedItems)
                 page++
             }
         }

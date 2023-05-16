@@ -2,17 +2,22 @@ package com.example.anirecord.ui.showdetail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.usecase.GetShowDetailUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import javax.inject.Inject
 
-class ShowDetailViewModel(private val id: Int) : ViewModel(), KoinComponent {
-    private val getShowDetailUseCase: GetShowDetailUseCase by inject()
+@HiltViewModel
+class ShowDetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val getShowDetailUseCase: GetShowDetailUseCase,
+) : ViewModel() {
+    private val id: Int = ShowDetailFragmentArgs.fromSavedStateHandle(savedStateHandle).showId
     private val _uiState = MutableLiveData<UiState>(UiState.Loading)
 
     val uiState get(): LiveData<UiState> = _uiState
