@@ -3,6 +3,7 @@ package com.example.anirecord.domain.usecase
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.repository.ShowRepository
 import com.example.anirecord.type.MediaSeason
+import javax.inject.Inject
 
 interface GetPopularUseCase {
     suspend operator fun invoke(
@@ -12,7 +13,10 @@ interface GetPopularUseCase {
     ): Pair<List<ShowListItemModel>, Boolean>?
 }
 
-class GetPopularUseCaseImpl(private val showRepository: ShowRepository) : GetPopularUseCase {
+class GetPopularUseCaseImpl @Inject constructor(
+    private val showRepository: ShowRepository
+) :
+    GetPopularUseCase {
     override suspend fun invoke(
         year: Int,
         season: MediaSeason,

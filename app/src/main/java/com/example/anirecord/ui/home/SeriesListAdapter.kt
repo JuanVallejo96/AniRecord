@@ -39,9 +39,10 @@ class SeriesListAdapter(private val clickHandler: SeriesClickHandler) :
         holder.bind(items[position])
     }
 
-    fun addItems(newItems: List<ShowListItemModel>) {
+    fun update(shows: List<ShowListItemModel>) {
         val initPosition = items.size
-        items.addAll(newItems)
+        items.clear()
+        items.addAll(shows)
         notifyItemRangeInserted(initPosition, items.size)
     }
 
