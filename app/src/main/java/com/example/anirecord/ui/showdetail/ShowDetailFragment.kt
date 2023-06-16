@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.anirecord.databinding.FragmentShowDetailBinding
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,8 +31,12 @@ class ShowDetailFragment : Fragment() {
                 }
 
                 is ShowDetailViewModel.UiState.Success -> {
-                    //val show = uiState.show
-                    //TODO("Update view")
+                    val show = uiState.show
+                    Picasso.get().load(show.cover).into(binding.showDetailCover)
+                    binding.showDetailTitle.text = show.title
+                    binding.showDetailDateSeason.text = show.season?.name ?: ""
+                    binding.showDetailDateYear.text = show.year?.toString() ?: ""
+                    binding.showDetailRatingValue.text = show.ratingString
                 }
             }
         }

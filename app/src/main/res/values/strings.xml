@@ -2,4 +2,5 @@
     <string name="app_name">AniRecord</string>
     <string name="label_home">Popular Now</string>
     <string name="label_show_detail">Show Details</string>
+    <string name="show_detail_cover_description">Show cover</string>
 </resources>

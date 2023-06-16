@@ -8,7 +8,14 @@ import com.example.anirecord.domain.model.ShowListItemModel
 fun ShowDetailQuery.Media.toModel(): ShowDetailModel {
     return ShowDetailModel(
         id = id,
-        cover = coverImage?.extraLarge
+        title = title?.let { it.english ?: it.romaji },
+        cover = coverImage?.extraLarge,
+        description = description,
+        averageScore = averageScore,
+        episodes = episodes,
+        season = season,
+        year = seasonYear,
+        nextEpisode = nextAiringEpisode,
     )
 }
 
