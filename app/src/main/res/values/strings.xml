@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">AniRecord</string>
     <string name="label_home">Popular Now</string>
+    <string name="label_search">Search</string>
     <string name="label_show_detail">Show Details</string>
+    <string name="show_detail_cover_description">Show cover</string>
+    <string name="show_status_finished">Finished</string>
+    <string name="show_status_releasing">Releasing</string>
+    <string name="show_status_to_be_released">To Be Released</string>
+    <string name="show_status_cancelled">Cancelled</string>
+    <string name="show_status_hiatus">Hiatus</string>
+    <string name="show_status_unknown">Unknown</string>
 </resources>

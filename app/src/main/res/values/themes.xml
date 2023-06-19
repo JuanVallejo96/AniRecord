@@ -16,4 +16,9 @@
     <style name="Theme.AniRecord.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.AniRecord.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="roundedImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/border_raduis</item>
+    </style>
 </resources>
