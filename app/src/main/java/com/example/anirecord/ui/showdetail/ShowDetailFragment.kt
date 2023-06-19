@@ -1,6 +1,8 @@
 package com.example.anirecord.ui.showdetail
 
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +39,12 @@ class ShowDetailFragment : Fragment() {
                     binding.showDetailDateSeason.text = show.season?.name ?: ""
                     binding.showDetailDateYear.text = show.year?.toString() ?: ""
                     binding.showDetailRatingValue.text = show.ratingString
+                    val html = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Html.fromHtml(show.description, Html.FROM_HTML_MODE_COMPACT)
+                    } else {
+                        Html.fromHtml(show.description)
+                    }
+                    binding.showDetailDescription.text = html
                 }
             }
         }

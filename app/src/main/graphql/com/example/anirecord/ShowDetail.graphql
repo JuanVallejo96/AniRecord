@@ -5,7 +5,7 @@ query ShowDetail($showId: Int!) {
             english
             romaji
         }
-        description
+        description(asHtml:true)
         coverImage {
             extraLarge
         }
