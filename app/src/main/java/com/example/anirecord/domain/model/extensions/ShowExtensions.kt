@@ -14,6 +14,7 @@ fun ShowDetailQuery.Media.toModel(): ShowDetailModel {
         averageScore = averageScore,
         episodes = episodes,
         season = season,
+        status = status,
         year = seasonYear,
         nextEpisode = nextAiringEpisode,
     )

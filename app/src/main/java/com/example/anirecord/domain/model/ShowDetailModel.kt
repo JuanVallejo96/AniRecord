@@ -2,6 +2,7 @@ package com.example.anirecord.domain.model
 
 import com.example.anirecord.ShowDetailQuery
 import com.example.anirecord.type.MediaSeason
+import com.example.anirecord.type.MediaStatus
 
 data class ShowDetailModel(
     val id: Int,
@@ -11,6 +12,7 @@ data class ShowDetailModel(
     val averageScore: Int?,
     val episodes: Int?,
     val season: MediaSeason?,
+    val status: MediaStatus?,
     val year: Int?,
     val nextEpisode: ShowDetailQuery.NextAiringEpisode?
 ) {
