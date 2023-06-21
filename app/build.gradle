@@ -49,9 +49,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     implementation "androidx.core:core-ktx:$androidxKotlinCoreVersion"
-    testImplementation "junit:junit:$junitVersion"
-    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
 
     // Navigation component support
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
@@ -66,21 +63,35 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomVersion"
     testImplementation "androidx.room:room-testing:$roomVersion"
 
-    //Hilt DI
+    // Hilt DI
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+    testImplementation "com.google.dagger:hilt-android-testing:$hiltVersion"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hiltVersion"
+    kaptTest "com.google.dagger:hilt-compiler:$hiltVersion"
 
     // Apollo GraphQL
     implementation "com.apollographql.apollo3:apollo-runtime:$apolloVersion"
 
     // Picasso
     implementation "com.squareup.picasso:picasso:$picassoVersion"
+
+    // Testing
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
 }
 
 apollo {
     service("service") {
-        packageName.set("com.example.anirecord")
+        packageName.set("com.example.anirecord.graphql")
         srcDir("src/main/graphql")
+        outputDirConnection {
+            connectToAndroidSourceSet("main")
+        }
     }
 }
 

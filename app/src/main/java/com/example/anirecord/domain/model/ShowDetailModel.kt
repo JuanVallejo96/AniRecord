@@ -1,8 +1,8 @@
 package com.example.anirecord.domain.model
 
-import com.example.anirecord.ShowDetailQuery
-import com.example.anirecord.type.MediaSeason
-import com.example.anirecord.type.MediaStatus
+import com.example.anirecord.graphql.ShowDetailQuery
+import com.example.anirecord.graphql.type.MediaSeason
+import com.example.anirecord.graphql.type.MediaStatus
 
 data class ShowDetailModel(
     val id: Int,

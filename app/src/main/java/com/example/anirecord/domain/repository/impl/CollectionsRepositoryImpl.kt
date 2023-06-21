@@ -3,8 +3,6 @@ package com.example.anirecord.domain.repository.impl
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.apollographql.apollo3.ApolloClient
-import com.example.anirecord.GenresQuery
-import com.example.anirecord.TagsQuery
 import com.example.anirecord.data.database.GenreDao
 import com.example.anirecord.data.database.TagDao
 import com.example.anirecord.data.entity.Genre
@@ -14,6 +12,8 @@ import com.example.anirecord.domain.model.MediaTagModel
 import com.example.anirecord.domain.model.extensions.toEntity
 import com.example.anirecord.domain.model.extensions.toModel
 import com.example.anirecord.domain.repository.CollectionsRepository
+import com.example.anirecord.graphql.GenresQuery
+import com.example.anirecord.graphql.TagsQuery
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

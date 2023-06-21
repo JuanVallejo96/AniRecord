@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.anirecord.R
 import com.example.anirecord.databinding.FragmentShowDetailBinding
-import com.example.anirecord.type.MediaStatus
+import com.example.anirecord.graphql.type.MediaStatus
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Objects
