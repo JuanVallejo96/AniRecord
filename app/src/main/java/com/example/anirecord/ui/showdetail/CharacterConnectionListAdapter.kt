@@ -2,8 +2,10 @@ package com.example.anirecord.ui.showdetail
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.anirecord.R
 import com.example.anirecord.databinding.CharacterListItemBinding
 import com.example.anirecord.domain.model.CharacterConnectionModel
 import com.squareup.picasso.Picasso
@@ -20,14 +22,22 @@ class CharacterConnectionListAdapter(
 
     class CharacterViewHolder(
         private val binding: CharacterListItemBinding,
-        private val clickHandler: CharacterClickHandler
+        private val clickHandler: CharacterClickHandler,
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CharacterConnectionModel) {
-            binding.root.setOnClickListener {
-                clickHandler.onCharacterClick(item)
+            binding.root.setOnClickListener { }
+            binding.characterListItemActorName.visibility = View.GONE
+
+            item.actorName?.let {
+                binding.characterListItemActorName.visibility = View.VISIBLE
+                binding.characterListItemActorName.text =
+                    itemView.context.getString(R.string.by_actor_label, item.actorName)
+                binding.root.setOnClickListener {
+                    clickHandler.onCharacterClick(item)
+                }
             }
-            binding.characterListItemName.text = item.name
+            binding.characterListItemCharacterName.text = item.characterName
             Picasso.get().load(item.cover).into(binding.characterListItemCover)
         }
     }

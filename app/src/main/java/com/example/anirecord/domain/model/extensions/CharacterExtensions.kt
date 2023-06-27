@@ -1,13 +1,30 @@
 package com.example.anirecord.domain.model.extensions
 
 import com.example.anirecord.domain.model.CharacterConnectionModel
+import com.example.anirecord.domain.model.ShowVoiceActorModel
 import com.example.anirecord.graphql.ShowDetailQuery
+import com.example.anirecord.graphql.ShowVoiceActorsQuery
 
 fun ShowDetailQuery.Characters.toModelList(): List<CharacterConnectionModel> {
-    return edges?.filterNotNull()?.mapNotNull(ShowDetailQuery.Edge::node)?.map {
+    return edges?.filterNotNull()?.map {
         CharacterConnectionModel(
-            name = it.name!!.full!!,
-            cover = it.image?.large
+            actorName = it.voiceActorRoles?.firstOrNull()?.voiceActor?.name?.full,
+            characterName = it.node!!.name!!.full!!,
+            cover = it.node.image?.large
         )
+    } ?: listOf()
+}
+
+fun ShowVoiceActorsQuery.Characters.toModelList(): List<ShowVoiceActorModel> {
+    return edges?.filterNotNull()?.flatMap { character ->
+        character.voiceActorRoles?.filterNotNull()?.map { actor ->
+            ShowVoiceActorModel(
+                actorName = actor.voiceActor!!.name!!.full!!,
+                actorImage = actor.voiceActor.image!!.large!!,
+                characterName = character.node!!.name!!.full!!,
+                characterImage = character.node.image!!.large!!,
+                roleDetails = actor.roleNotes,
+            )
+        } ?: listOf()
     } ?: listOf()
 }

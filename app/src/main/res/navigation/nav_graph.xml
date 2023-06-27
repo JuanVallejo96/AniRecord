@@ -25,5 +25,25 @@
             android:name="showId"
             app:argType="integer"
             app:nullable="false" />
+
+        <action
+            android:id="@+id/navToStaffList"
+            app:destination="@id/staffListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/staffListFragment"
+        android:name="com.example.anirecord.ui.stafflist.StaffListFragment"
+        android:label="@string/label_staff_list"
+        tools:layout="@layout/fragment_staff_list">
+        <argument
+            android:name="showId"
+            app:argType="integer"
+            app:nullable="false" />
+
+        <argument
+            android:name="staffKind"
+            app:argType="com.example.anirecord.ui.stafflist.StaffKind"
+            app:nullable="false" />
     </fragment>
 </navigation>

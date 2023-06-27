@@ -10,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anirecord.R
 import com.example.anirecord.databinding.FragmentShowDetailBinding
 import com.example.anirecord.domain.model.CharacterConnectionModel
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.graphql.type.MediaStatus
+import com.example.anirecord.ui.stafflist.StaffKind
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Objects
@@ -108,6 +110,10 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
             }
         }
 
+        binding.showDetailAllCharactersButton.setOnClickListener {
+            clickViewAllCharacters(show.id)
+        }
+
         crossFade()
     }
 
@@ -130,12 +136,21 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
             })
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun clickViewAllCharacters(showId: Int) {
+        findNavController().navigate(
+            ShowDetailFragmentDirections.navToStaffList(
+                showId,
+                StaffKind.VoiceActors
+            )
+        )
     }
 
     override fun onCharacterClick(show: CharacterConnectionModel) {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

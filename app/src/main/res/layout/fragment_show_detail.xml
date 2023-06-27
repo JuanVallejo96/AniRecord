@@ -248,13 +248,13 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button"
+                app:layout_constraintEnd_toStartOf="@+id/showDetailAllCharactersButton"
                 app:layout_constraintStart_toStartOf="@+id/showDetailTitle"
                 app:layout_constraintTop_toBottomOf="@+id/showDetailDescription"
                 app:layout_constraintVertical_bias="0.0" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button"
+                android:id="@+id/showDetailAllCharactersButton"
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -284,7 +284,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:constraint_referenced_ids="showDetailCharactersLabel,button,showDetailCharacterList"
+                app:constraint_referenced_ids="showDetailCharactersLabel,showDetailAllCharactersButton,showDetailCharacterList"
                 tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
