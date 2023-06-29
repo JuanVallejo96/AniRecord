@@ -173,7 +173,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
     }
 
     override fun onStaffClickHandler(show: ShowStaffListItemModel) {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
     }
 
     override fun onDestroyView() {
