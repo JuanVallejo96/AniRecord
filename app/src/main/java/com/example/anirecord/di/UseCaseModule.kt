@@ -4,6 +4,8 @@ import com.example.anirecord.domain.usecase.GetPopularUseCase
 import com.example.anirecord.domain.usecase.GetPopularUseCaseImpl
 import com.example.anirecord.domain.usecase.GetShowDetailUseCase
 import com.example.anirecord.domain.usecase.GetShowDetailUseCaseImpl
+import com.example.anirecord.domain.usecase.GetStaffListUseCase
+import com.example.anirecord.domain.usecase.GetStaffListUseCaseImpl
 import com.example.anirecord.domain.usecase.GetVoiceActorsListUseCase
 import com.example.anirecord.domain.usecase.GetVoiceActorsListUseCaseImpl
 import dagger.Binds
@@ -28,4 +30,9 @@ abstract class UseCaseModule {
     abstract fun bindGetShowVoiceActorsUseCase(
         getShowVoiceActorsList: GetVoiceActorsListUseCaseImpl
     ): GetVoiceActorsListUseCase
+
+    @Binds
+    abstract fun bindGetShowStaffUseCase(
+        getShowStaffList: GetStaffListUseCaseImpl
+    ): GetStaffListUseCase
 }

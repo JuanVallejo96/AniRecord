@@ -1,4 +1,4 @@
-package com.example.anirecord.ui.stafflist
+package com.example.anirecord.ui.voiceactorlist
 
 import android.view.LayoutInflater
 import android.view.View
@@ -46,8 +46,11 @@ class VoiceActorListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VoiceActorViewHolder {
-        val binding =
-            VoiceActorListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = VoiceActorListItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return VoiceActorViewHolder(binding, clickHandler)
     }
 

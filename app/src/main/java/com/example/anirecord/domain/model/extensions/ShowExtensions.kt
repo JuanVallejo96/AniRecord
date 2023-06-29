@@ -17,7 +17,8 @@ fun ShowDetailQuery.Media.toModel(): ShowDetailModel {
         status = status,
         year = seasonYear,
         nextEpisode = nextAiringEpisode,
-        characters = characters?.toModelList() ?: listOf()
+        characters = characters?.toModelList() ?: listOf(),
+        staff = staff?.toModelList() ?: listOf(),
     )
 }
 

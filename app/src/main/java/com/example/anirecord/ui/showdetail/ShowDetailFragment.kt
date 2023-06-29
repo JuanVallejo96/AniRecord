@@ -16,15 +16,16 @@ import com.example.anirecord.R
 import com.example.anirecord.databinding.FragmentShowDetailBinding
 import com.example.anirecord.domain.model.CharacterConnectionModel
 import com.example.anirecord.domain.model.ShowDetailModel
+import com.example.anirecord.domain.model.ShowStaffListItemModel
 import com.example.anirecord.graphql.type.MediaStatus
-import com.example.anirecord.ui.stafflist.StaffKind
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Objects
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterClickHandler {
+class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterClickHandler,
+    StaffListAdapter.StaffClickHandler {
     private var _binding: FragmentShowDetailBinding? = null
     private val vm: ShowDetailViewModel by viewModels()
     private var shortAnimationDuration by Delegates.notNull<Int>()
@@ -100,6 +101,12 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
 
 
         if (show.characters.isNotEmpty()) {
+            binding.showDetailAllCharactersButton.apply {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    clickViewAllCharacters(show.id)
+                }
+            }
             binding.showDetailCharactersGroup.visibility = View.VISIBLE
             val listAdapter = CharacterConnectionListAdapter(this, show.characters)
             val recyclerLayoutManager = LinearLayoutManager(context)
@@ -110,8 +117,21 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
             }
         }
 
-        binding.showDetailAllCharactersButton.setOnClickListener {
-            clickViewAllCharacters(show.id)
+        if (show.staff.isNotEmpty()) {
+            binding.showDetailAllStaffButton.apply {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    clickViewAllStaff(show.id)
+                }
+            }
+            binding.showDetailStaffGroup.visibility = View.VISIBLE
+            val listAdapter = StaffListAdapter(this, show.staff)
+            val recyclerLayoutManager = LinearLayoutManager(context)
+            recyclerLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            binding.showDetailStaffList.apply {
+                layoutManager = recyclerLayoutManager
+                adapter = listAdapter
+            }
         }
 
         crossFade()
@@ -138,15 +158,22 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
 
     private fun clickViewAllCharacters(showId: Int) {
         findNavController().navigate(
-            ShowDetailFragmentDirections.navToStaffList(
-                showId,
-                StaffKind.VoiceActors
-            )
+            ShowDetailFragmentDirections.navToVoiceActorList(showId)
+        )
+    }
+
+    private fun clickViewAllStaff(showId: Int) {
+        findNavController().navigate(
+            ShowDetailFragmentDirections.navToStaffList(showId)
         )
     }
 
     override fun onCharacterClick(show: CharacterConnectionModel) {
         // TODO("Not yet implemented")
+    }
+
+    override fun onStaffClickHandler(show: ShowStaffListItemModel) {
+        TODO("Not yet implemented")
     }
 
     override fun onDestroyView() {

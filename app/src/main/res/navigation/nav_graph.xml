@@ -29,6 +29,21 @@
         <action
             android:id="@+id/navToStaffList"
             app:destination="@id/staffListFragment" />
+
+        <action
+            android:id="@+id/navToVoiceActorList"
+            app:destination="@id/voiceActorListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/voiceActorListFragment"
+        android:name="com.example.anirecord.ui.voiceactorlist.VoiceActorListFragment"
+        android:label="@string/label_voice_actor_list"
+        tools:layout="@layout/fragment_voice_actor_list">
+        <argument
+            android:name="showId"
+            app:argType="integer"
+            app:nullable="false" />
     </fragment>
 
     <fragment
@@ -39,11 +54,6 @@
         <argument
             android:name="showId"
             app:argType="integer"
-            app:nullable="false" />
-
-        <argument
-            android:name="staffKind"
-            app:argType="com.example.anirecord.ui.stafflist.StaffKind"
             app:nullable="false" />
     </fragment>
 </navigation>

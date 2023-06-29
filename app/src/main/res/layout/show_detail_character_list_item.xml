@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/characterListItemCover"
+        android:id="@+id/characterListItemImage"
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:layout_marginStart="4dp"
@@ -22,18 +22,18 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/characterListItemCharacterName"
+        android:id="@+id/characterListItemMainInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@id/characterListItemCover"
-        app:layout_constraintStart_toStartOf="@+id/characterListItemCover"
-        app:layout_constraintTop_toBottomOf="@id/characterListItemCover"
+        app:layout_constraintEnd_toEndOf="@id/characterListItemImage"
+        app:layout_constraintStart_toStartOf="@+id/characterListItemImage"
+        app:layout_constraintTop_toBottomOf="@id/characterListItemImage"
         tools:text="Character Name" />
 
     <TextView
-        android:id="@+id/characterListItemActorName"
+        android:id="@+id/characterListItemSubInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -42,8 +42,8 @@
         android:textStyle="italic"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/characterListItemCharacterName"
-        app:layout_constraintStart_toStartOf="@+id/characterListItemCharacterName"
-        app:layout_constraintTop_toBottomOf="@+id/characterListItemCharacterName"
+        app:layout_constraintEnd_toEndOf="@+id/characterListItemMainInfo"
+        app:layout_constraintStart_toStartOf="@+id/characterListItemMainInfo"
+        app:layout_constraintTop_toBottomOf="@+id/characterListItemMainInfo"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
