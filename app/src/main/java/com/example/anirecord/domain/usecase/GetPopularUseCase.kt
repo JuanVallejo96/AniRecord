@@ -2,7 +2,7 @@ package com.example.anirecord.domain.usecase
 
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.repository.ShowRepository
-import com.example.anirecord.type.MediaSeason
+import com.example.anirecord.graphql.type.MediaSeason
 import javax.inject.Inject
 
 interface GetPopularUseCase {

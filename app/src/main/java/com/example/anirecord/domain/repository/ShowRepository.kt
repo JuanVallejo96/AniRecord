@@ -2,7 +2,7 @@ package com.example.anirecord.domain.repository
 
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
-import com.example.anirecord.type.MediaSeason
+import com.example.anirecord.graphql.type.MediaSeason
 
 interface ShowRepository {
     suspend fun getPopularOnSeason(

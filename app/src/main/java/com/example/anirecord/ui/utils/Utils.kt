@@ -1,7 +1,7 @@
 package com.example.anirecord.ui.utils
 
-import com.example.anirecord.type.MediaSeason
-import java.util.*
+import com.example.anirecord.graphql.type.MediaSeason
+import java.util.Calendar
 
 class Utils {
     companion object {

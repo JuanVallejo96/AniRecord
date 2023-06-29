@@ -1,9 +1,9 @@
 package com.example.anirecord.domain.model.extensions
 
-import com.example.anirecord.SeasonPopularQuery
-import com.example.anirecord.ShowDetailQuery
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
+import com.example.anirecord.graphql.SeasonPopularQuery
+import com.example.anirecord.graphql.ShowDetailQuery
 
 fun ShowDetailQuery.Media.toModel(): ShowDetailModel {
     return ShowDetailModel(
@@ -14,8 +14,11 @@ fun ShowDetailQuery.Media.toModel(): ShowDetailModel {
         averageScore = averageScore,
         episodes = episodes,
         season = season,
+        status = status,
         year = seasonYear,
         nextEpisode = nextAiringEpisode,
+        characters = characters?.toModelList() ?: listOf(),
+        staff = staff?.toModelList() ?: listOf(),
     )
 }
 
