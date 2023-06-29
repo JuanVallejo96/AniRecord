@@ -1,0 +1,20 @@
+query ShowStaff($showId: Int!, $page: Int!) {
+    Media(id: $showId) {
+        staff(sort: [ROLE, RELEVANCE], page: $page, perPage: 40) {
+            pageInfo {
+                hasNextPage
+            }
+            edges {
+                role
+                node {
+                    name {
+                        full
+                    }
+                    image {
+                        large
+                    }
+                }
+            }
+        }
+    }
+}

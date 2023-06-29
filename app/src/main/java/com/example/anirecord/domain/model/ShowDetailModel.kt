@@ -14,7 +14,9 @@ data class ShowDetailModel(
     val season: MediaSeason?,
     val status: MediaStatus?,
     val year: Int?,
-    val nextEpisode: ShowDetailQuery.NextAiringEpisode?
+    val nextEpisode: ShowDetailQuery.NextAiringEpisode?,
+    val characters: List<CharacterConnectionModel>,
+    val staff: List<ShowStaffListItemModel>
 ) {
     val ratingString: String
         get() = (this.averageScore?.let { (it / 10).toString() } ?: "??") + " / 10"

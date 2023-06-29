@@ -10,4 +10,11 @@
     <string name="show_status_cancelled">Cancelled</string>
     <string name="show_status_hiatus">Hiatus</string>
     <string name="show_status_unknown">Unknown</string>
+    <string name="main_characters_label">Main Characters</string>
+    <string name="staff_label">Show Staff</string>
+    <string name="view_all_label">View All</string>
+    <string name="by_actor_label">by %1$s</string>
+    <string name="label_staff_list">Staff List</string>
+    <string name="label_voice_actor_list">Voice Actor List</string>
+    <string name="as_character_label">as %1$s</string>
 </resources>

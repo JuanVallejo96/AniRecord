@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.AniRecord" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.AniRecord" parent="Theme.Material3.Light">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryDark">@color/purple_700</item>
@@ -20,5 +20,10 @@
     <style name="roundedImage">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/border_raduis</item>
+    </style>
+
+    <style name="circularImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 </resources>

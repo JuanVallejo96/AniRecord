@@ -15,12 +15,42 @@ query ShowDetail($showId: Int!) {
         season
         seasonYear
         status(version: 2)
+        # TODO: Add next episode to show detail view
+        # TODO: Use total episode number and next episode number to change the label to "Season Premier" or something similar
         nextAiringEpisode {
             airingAt
             episode
-            media {
-                coverImage {
-                    large
+        }
+        characters(sort: [ROLE, RELEVANCE], perPage: 5) {
+            edges {
+                role
+                node {
+                    name {
+                        full
+                    }
+                    image {
+                        large
+                    }
+                }
+                voiceActorRoles(language: JAPANESE, sort: RELEVANCE) {
+                    voiceActor {
+                        name {
+                            full
+                        }
+                    }
+                }
+            }
+        }
+        staff(sort: [ROLE, RELEVANCE], perPage: 5) {
+            edges {
+                role
+                node {
+                    name {
+                        full
+                    }
+                    image {
+                        large
+                    }
                 }
             }
         }

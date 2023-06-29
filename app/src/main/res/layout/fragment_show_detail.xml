@@ -164,10 +164,12 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:visibility="gone"
                 app:cardCornerRadius="@dimen/border_raduis"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/showDetailDateInfo">
+                app:layout_constraintTop_toBottomOf="@+id/showDetailDateInfo"
+                tools:visibility="visible">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -236,6 +238,105 @@
                 app:layout_constraintVertical_bias="0.0"
                 tools:text="@tools:sample/lorem[50]" />
 
+            <TextView
+                android:id="@+id/showDetailCharactersLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/main_characters_label"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/showDetailAllCharactersButton"
+                app:layout_constraintStart_toStartOf="@+id/showDetailTitle"
+                app:layout_constraintTop_toBottomOf="@+id/showDetailDescription"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/showDetailAllCharactersButton"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all_label"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/showDetailCharactersLabel"
+                app:layout_constraintEnd_toEndOf="@+id/showDetailTitle"
+                app:layout_constraintTop_toTopOf="@+id/showDetailCharactersLabel"
+                tools:visibility="visible" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/showDetailCharacterList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/showDetailCharactersLabel"
+                tools:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/show_detail_character_list_item"
+                tools:orientation="horizontal" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/showDetailCharactersGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="showDetailCharactersLabel,showDetailAllCharactersButton,showDetailCharacterList"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/showDetailStaffLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/staff_label"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/showDetailAllStaffButton"
+                app:layout_constraintStart_toStartOf="@+id/showDetailTitle"
+                app:layout_constraintTop_toBottomOf="@+id/showDetailCharacterList"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/showDetailAllStaffButton"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all_label"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/showDetailStaffLabel"
+                app:layout_constraintEnd_toEndOf="@+id/showDetailTitle"
+                app:layout_constraintTop_toTopOf="@+id/showDetailStaffLabel"
+                tools:visibility="visible" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/showDetailStaffList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/showDetailStaffLabel"
+                app:layout_constraintVertical_bias="0.0"
+                tools:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/show_detail_character_list_item"
+                tools:orientation="horizontal" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/showDetailStaffGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="showDetailStaffList,showDetailAllStaffButton,showDetailStaffLabel"
+                tools:visibility="visible" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
@@ -243,5 +344,6 @@
         android:id="@+id/showDetailLoadingSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        tools:visibility="gone" />
 </FrameLayout>

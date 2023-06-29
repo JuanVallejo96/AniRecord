@@ -54,6 +54,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$navVersion"
+    implementation "androidx.core:core-ktx:$kotlinAndroidVersion"
     androidTestImplementation "androidx.navigation:navigation-testing:$navVersion"
 
     // Room
