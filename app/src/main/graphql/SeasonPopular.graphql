@@ -4,15 +4,7 @@ query SeasonPopular($page: Int!, $year: Int!, $season: MediaSeason!) {
             hasNextPage
         }
         media(type: ANIME, isAdult: false, seasonYear: $year, season: $season, sort: [POPULARITY_DESC]) {
-            id
-            title {
-                english
-                romaji
-            }
-            coverImage {
-                large
-                color
-            }
+            ...ShowListItemFragment
         }
     }
 }

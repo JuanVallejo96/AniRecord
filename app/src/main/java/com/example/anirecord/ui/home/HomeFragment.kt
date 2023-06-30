@@ -34,6 +34,10 @@ class HomeFragment : Fragment(), SeriesListAdapter.SeriesClickHandler {
             addOnScrollListener(InfiniteScrollListener(vm::load, recyclerLayoutManager))
         }
 
+        binding.searchFab.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.navToSearch())
+        }
+
         vm.shows.observe(viewLifecycleOwner, listAdapter::update)
 
         return binding.root

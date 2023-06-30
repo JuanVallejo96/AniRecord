@@ -2,8 +2,8 @@ package com.example.anirecord.domain.model.extensions
 
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
-import com.example.anirecord.graphql.SeasonPopularQuery
 import com.example.anirecord.graphql.ShowDetailQuery
+import com.example.anirecord.graphql.fragment.ShowListItemFragment
 
 fun ShowDetailQuery.Media.toModel(): ShowDetailModel {
     return ShowDetailModel(
@@ -22,7 +22,7 @@ fun ShowDetailQuery.Media.toModel(): ShowDetailModel {
     )
 }
 
-fun SeasonPopularQuery.Medium.toModel(): ShowListItemModel {
+fun ShowListItemFragment.toModel(): ShowListItemModel {
     return ShowListItemModel(
         id = id,
         name = title?.let { it.english ?: it.romaji },
