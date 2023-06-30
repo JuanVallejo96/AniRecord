@@ -1,0 +1,10 @@
+query Search($query: String!, $page: Int!) {
+  Page(page: $page, perPage: 40) {
+    pageInfo {
+        hasNextPage
+    },
+    media(search: $query, type: ANIME, isAdult: false, format_in: [TV, MOVIE]) {
+        ...ShowListItemFragment
+    }
+  }
+}

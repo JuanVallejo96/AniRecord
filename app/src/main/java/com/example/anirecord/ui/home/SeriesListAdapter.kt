@@ -1,5 +1,6 @@
 package com.example.anirecord.ui.home
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -17,9 +18,8 @@ class SeriesListAdapter(private val clickHandler: SeriesClickHandler) :
 
     class SeriesViewHolder(
         private val binding: SeriesListItemBinding,
-        private val clickHandler: SeriesClickHandler
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+        private val clickHandler: SeriesClickHandler,
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ShowListItemModel) {
             binding.root.setOnClickListener {
                 clickHandler.onClick(item)
@@ -30,8 +30,11 @@ class SeriesListAdapter(private val clickHandler: SeriesClickHandler) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesViewHolder {
-        val binding =
-            SeriesListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = SeriesListItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return SeriesViewHolder(binding, clickHandler)
     }
 
@@ -44,6 +47,13 @@ class SeriesListAdapter(private val clickHandler: SeriesClickHandler) :
         items.clear()
         items.addAll(shows)
         notifyItemRangeInserted(initPosition, items.size)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun replaceAll(shows: List<ShowListItemModel>) {
+        items.clear()
+        items.addAll(shows)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = items.size

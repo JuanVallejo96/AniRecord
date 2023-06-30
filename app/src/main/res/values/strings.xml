@@ -17,4 +17,6 @@
     <string name="label_staff_list">Staff List</string>
     <string name="label_voice_actor_list">Voice Actor List</string>
     <string name="as_character_label">as %1$s</string>
+    <string name="empty_search">No results</string>
+    <string name="start_search">Start searching</string>
 </resources>

@@ -12,4 +12,9 @@ interface ShowRepository {
     ): Pair<List<ShowListItemModel>, Boolean>?
 
     suspend fun getShowById(id: Int): ShowDetailModel
+
+    suspend fun getSearch(
+        query: String,
+        page: Int
+    ): Pair<List<ShowListItemModel>, Boolean>?
 }
