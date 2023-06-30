@@ -1,8 +1,8 @@
 package com.example.anirecord.di
 
-import com.example.anirecord.data.database.CollectionsDatabase
-import com.example.anirecord.data.database.GenreDao
-import com.example.anirecord.data.database.TagDao
+import com.example.anirecord.data.database.AppDatabase
+import com.example.anirecord.data.database.ListDao
+import com.example.anirecord.data.database.ShowDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,13 +14,13 @@ import javax.inject.Singleton
 object DaoModule {
     @Singleton
     @Provides
-    fun provideGenreDao(
-        collectionsDatabase: CollectionsDatabase
-    ): GenreDao = collectionsDatabase.getGenreDao()
+    fun provideShowDao(
+        database: AppDatabase
+    ): ShowDao = database.getShowDao()
 
     @Singleton
     @Provides
-    fun provideTagDao(
-        collectionsDatabase: CollectionsDatabase
-    ): TagDao = collectionsDatabase.getTagDao()
+    fun provideListDao(
+        database: AppDatabase
+    ): ListDao = database.getListDao()
 }

@@ -4,11 +4,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.anirecord.Constants
 
-@Entity(tableName = Constants.COLLECTIONS_DB_TAG_TABLE_NAME)
-data class MediaTag(
+@Entity(tableName = Constants.DB_SHOW_TABLE_NAME)
+data class ShowEntity(
     @PrimaryKey
-    val id: Int,
+    val showId: Int,
     val name: String,
-    val description: String?,
-    val category: String?,
+    val cover: String,
+    val progress: Int,
+    val isFavourite: Boolean,
 )
