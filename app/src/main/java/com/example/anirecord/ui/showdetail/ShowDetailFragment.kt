@@ -20,6 +20,8 @@ import com.example.anirecord.domain.model.ShowStaffListItemModel
 import com.example.anirecord.graphql.type.MediaStatus
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Objects
 import kotlin.properties.Delegates
 
@@ -50,6 +52,23 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         }
 
         return binding.root
+    }
+
+    private fun getDateTime(s: String): String? {
+        try {
+
+            val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                resources.configuration.locales.get(0)
+            } else {
+                resources.configuration.locale
+            }
+
+            val sdf = SimpleDateFormat("dd/MM/yyyy", locale)
+            val netDate = Date(s.toLong() * 1000)
+            return sdf.format(netDate)
+        } catch (e: Exception) {
+            return ""
+        }
     }
 
     private fun setShowInfo(show: ShowDetailModel) {
@@ -98,6 +117,23 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         binding.showDetailStatusIcon.setImageResource(statusResource)
         binding.showDetailStatusLabel.text = getString(statusLabel)
         binding.showDetailDescription.text = html
+
+        if (show.nextEpisode != null) {
+            if (show.nextEpisode.episode == 1) {
+                binding.ShowNextEpisode.text = requireContext().getString(
+                    R.string.next_episode_not_released_label,
+                    getDateTime(show.nextEpisode.airingAt.toString())
+                )
+            } else {
+                binding.ShowNextEpisode.text = requireContext().getString(
+                    R.string.next_episode_released_label,
+                    show.nextEpisode.episode,
+                    getDateTime(show.nextEpisode.airingAt.toString())
+                )
+            }
+        } else {
+            binding.ShowNextEpisode.visibility = View.GONE
+        }
 
 
         if (show.characters.isNotEmpty()) {
