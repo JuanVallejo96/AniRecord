@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import com.example.anirecord.Constants
 import com.example.anirecord.data.entity.ListEntity
@@ -21,6 +22,7 @@ interface ListDao {
     fun findById(id: Int): LiveData<ListEntity>
 
     @Query("SELECT * FROM ${Constants.DB_LIST_TABLE_NAME} WHERE listId = :id")
+    @Transaction
     fun findWithShowsById(id: Int): LiveData<ListWithShows>
 
     @Query("SELECT *, COUNT(*) as itemCount FROM ${Constants.DB_LIST_TABLE_NAME} l JOIN ${Constants.DB_LIST_SHOW_XREFF_TABLE_NAME} xr ON (l.listId = xr.listId) GROUP BY l.listId")
