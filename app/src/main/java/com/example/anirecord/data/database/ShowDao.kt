@@ -19,7 +19,10 @@ interface ShowDao {
     fun getAll(): LiveData<List<ShowEntity>>
 
     @Query("SELECT * FROM ${Constants.DB_SHOW_TABLE_NAME} WHERE showId = :id")
-    fun findById(id: Int): LiveData<ShowEntity>
+    fun findById(id: Int): LiveData<ShowEntity?>
+
+    @Query("SELECT * FROM ${Constants.DB_SHOW_TABLE_NAME} WHERE showId = :id")
+    fun getById(id: Int): ShowEntity?
 
     @Query("SELECT * FROM ${Constants.DB_SHOW_TABLE_NAME} WHERE isFavourite = 1")
     fun getFavourites(): LiveData<List<ShowEntity>>

@@ -1,12 +1,13 @@
 package com.example.anirecord.ui.showdetail
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.usecase.GetShowDetailUseCase
+import com.example.anirecord.domain.usecase.ToggleFavouriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,23 +17,21 @@ import javax.inject.Inject
 class ShowDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getShowDetailUseCase: GetShowDetailUseCase,
+    private val toggleFavouriteUseCase: ToggleFavouriteUseCase,
 ) : ViewModel() {
     private val id: Int = ShowDetailFragmentArgs.fromSavedStateHandle(savedStateHandle).showId
-    private val _uiState = MutableLiveData<UiState>(UiState.Loading)
+    private var _show: ShowDetailModel? = null
+    val show: LiveData<ShowDetailModel>
+        get() = getShowDetailUseCase(id).map {
+            _show = it
+            it
+        }
 
-    val uiState get(): LiveData<UiState> = _uiState
-
-    init {
-        load()
-    }
-
-    private fun load() = viewModelScope.launch(Dispatchers.IO) {
-        val show = getShowDetailUseCase(id)
-        _uiState.postValue(UiState.Success(show))
-    }
-
-    sealed class UiState {
-        data class Success(val show: ShowDetailModel) : UiState()
-        object Loading : UiState()
+    fun toggleFavourite() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _show?.let {
+                toggleFavouriteUseCase(it)
+            }
+        }
     }
 }

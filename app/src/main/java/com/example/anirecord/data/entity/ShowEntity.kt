@@ -10,6 +10,6 @@ data class ShowEntity(
     val showId: Int,
     val name: String,
     val cover: String,
-    val progress: Int,
-    val isFavourite: Boolean,
+    var progress: Int,
+    var isFavourite: Boolean,
 )

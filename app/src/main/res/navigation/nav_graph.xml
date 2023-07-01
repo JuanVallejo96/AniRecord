@@ -33,6 +33,18 @@
     </fragment>
 
     <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="com.example.anirecord.ui.favourites.FavouritesFragment"
+        android:label="@string/label_favourites"
+        tools:layout="@layout/fragment_favourites">
+
+        <action
+            android:id="@+id/navToDetail"
+            app:destination="@id/showDetailFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/showDetailFragment"
         android:name="com.example.anirecord.ui.showdetail.ShowDetailFragment"
         android:label="@string/label_show_detail"

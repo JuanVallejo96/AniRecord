@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anirecord.R
 import com.example.anirecord.databinding.FragmentSearchBinding
 import com.example.anirecord.domain.model.ShowListItemModel
-import com.example.anirecord.ui.home.SeriesListAdapter
+import com.example.anirecord.ui.adapters.SeriesListAdapter
 import com.example.anirecord.ui.utils.InfiniteScrollListener
 import com.example.anirecord.ui.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,7 +89,7 @@ class SearchFragment : Fragment(), SeriesListAdapter.SeriesClickHandler {
         return binding.root
     }
 
-    override fun onClick(show: ShowListItemModel) {
+    override fun onShowClick(show: ShowListItemModel) {
         findNavController().navigate(SearchFragmentDirections.navToDetail(show.id))
     }
 

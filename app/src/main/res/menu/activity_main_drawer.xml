@@ -8,5 +8,10 @@
             android:id="@+id/homeFragment"
             android:icon="@android:drawable/ic_menu_today"
             android:title="@string/label_home" />
+
+        <item
+            android:id="@+id/favouritesFragment"
+            android:icon="@drawable/star_filled_white"
+            android:title="@string/label_favourites" />
     </group>
 </menu>

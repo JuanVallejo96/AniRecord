@@ -19,5 +19,5 @@ class SearchByNameUseCaseImpl @Inject constructor(
         query: String,
         page: Int,
     ): Pair<List<ShowListItemModel>, Boolean>? =
-        showRepository.getSearch(query, page)
+        showRepository.searchByQuery(query, page)
 }
