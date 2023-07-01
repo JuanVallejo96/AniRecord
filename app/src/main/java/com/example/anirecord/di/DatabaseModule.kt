@@ -3,7 +3,7 @@ package com.example.anirecord.di
 import android.content.Context
 import androidx.room.Room
 import com.example.anirecord.Constants
-import com.example.anirecord.data.database.CollectionsDatabase
+import com.example.anirecord.data.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,11 +18,11 @@ object DatabaseModule {
     @Provides
     fun provideDatabase(
         @ApplicationContext context: Context
-    ): CollectionsDatabase {
+    ): AppDatabase {
         return Room.databaseBuilder(
             context,
-            CollectionsDatabase::class.java,
-            Constants.COLLECTIONS_DB_NAME
-        ).addMigrations(*CollectionsDatabase.migrations.toTypedArray()).build()
+            AppDatabase::class.java,
+            Constants.DB_NAME
+        ).addMigrations(*AppDatabase.migrations.toTypedArray()).build()
     }
 }
