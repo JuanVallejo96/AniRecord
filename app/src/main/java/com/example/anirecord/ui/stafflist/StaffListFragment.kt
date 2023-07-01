@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anirecord.databinding.FragmentStaffListBinding
 import com.example.anirecord.domain.model.ShowStaffListItemModel
@@ -39,8 +40,10 @@ class StaffListFragment : Fragment(), StaffListAdapter.StaffClickHandler {
         return binding.root
     }
 
-    override fun onStaffClickHandler(voiceActor: ShowStaffListItemModel) {
-        // TODO("Not yet implemented")
+    override fun onStaffClickHandler(staff: ShowStaffListItemModel) {
+        findNavController().navigate(
+            StaffListFragmentDirections.navToStaffShowsList(staff.id)
+        )
     }
 
     override fun onDestroyView() {

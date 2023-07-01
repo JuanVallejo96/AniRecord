@@ -8,12 +8,17 @@ import com.example.anirecord.data.database.ShowDao
 import com.example.anirecord.data.entity.ShowEntity
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
+import com.example.anirecord.domain.model.StaffShowListItemModel
+import com.example.anirecord.domain.model.VoiceActorShowsListItemModel
 import com.example.anirecord.domain.model.extensions.toListModel
 import com.example.anirecord.domain.model.extensions.toModel
+import com.example.anirecord.domain.model.extensions.toModelList
 import com.example.anirecord.domain.repository.ShowRepository
 import com.example.anirecord.graphql.SearchQuery
 import com.example.anirecord.graphql.SeasonPopularQuery
 import com.example.anirecord.graphql.ShowDetailQuery
+import com.example.anirecord.graphql.StaffShowsQuery
+import com.example.anirecord.graphql.VoiceActorShowsQuery
 import com.example.anirecord.graphql.type.MediaSeason
 import javax.inject.Inject
 
@@ -80,6 +85,30 @@ class ShowRepositoryImpl @Inject constructor(
         val items = data.media?.filterNotNull()?.map {
             it.showListItemFragment.toModel()
         } ?: listOf()
+        return Pair(items, data.pageInfo?.hasNextPage ?: false)
+    }
+
+    override suspend fun getStaffShows(
+        staffId: Int,
+        page: Int
+    ): Pair<List<StaffShowListItemModel>, Boolean>? {
+        val data = apolloClient.query(
+            StaffShowsQuery(staffId, page)
+        ).execute().data?.Staff?.staffMedia ?: return null
+        val items = data.edges?.filterNotNull()?.map {
+            it.toModel()
+        } ?: listOf()
+        return Pair(items, data.pageInfo?.hasNextPage ?: false)
+    }
+
+    override suspend fun getVoiceActorShows(
+        staffId: Int,
+        page: Int
+    ): Pair<List<VoiceActorShowsListItemModel>, Boolean>? {
+        val data = apolloClient.query(
+            VoiceActorShowsQuery(staffId, page)
+        ).execute().data?.Staff?.characters ?: return null
+        val items = data.toModelList()
         return Pair(items, data.pageInfo?.hasNextPage ?: false)
     }
 }

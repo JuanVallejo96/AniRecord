@@ -1,6 +1,7 @@
 package com.example.anirecord.domain.model
 
-class ShowVoiceActorModel(
+data class ShowVoiceActorModel(
+    val actorId: Int,
     val actorName: String,
     val actorImage: String,
     val characterName: String,

@@ -190,12 +190,18 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         )
     }
 
-    override fun onCharacterClick(show: CharacterConnectionModel) {
-        // TODO("Not yet implemented")
+    override fun onCharacterClick(characterConnection: CharacterConnectionModel) {
+        characterConnection.actorId?.let { actorId ->
+            findNavController().navigate(
+                ShowDetailFragmentDirections.navToVoiceActorShowsList(actorId)
+            )
+        }
     }
 
-    override fun onStaffClickHandler(show: ShowStaffListItemModel) {
-        // TODO("Not yet implemented")
+    override fun onStaffClickHandler(staff: ShowStaffListItemModel) {
+        findNavController().navigate(
+            ShowDetailFragmentDirections.navToStaffShowsList(staff.id)
+        )
     }
 
     private fun getDateTime(s: String): String? {

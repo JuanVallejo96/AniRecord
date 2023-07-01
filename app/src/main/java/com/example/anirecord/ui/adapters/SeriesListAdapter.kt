@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.anirecord.R
 import com.example.anirecord.databinding.SeriesListItemBinding
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.squareup.picasso.Picasso
@@ -24,8 +25,8 @@ class SeriesListAdapter(private val clickHandler: SeriesClickHandler) :
             binding.root.setOnClickListener {
                 clickHandler.onShowClick(item)
             }
-            binding.seriesTitle.text = item.name ?: "Unknown"
-            Picasso.get().load(item.cover).into(binding.seriesCover)
+            binding.showTitle.text = item.name ?: itemView.context.getText(R.string.unknown_label)
+            Picasso.get().load(item.cover).into(binding.showCover)
         }
     }
 

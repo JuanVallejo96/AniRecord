@@ -7,7 +7,8 @@ import com.example.anirecord.graphql.ShowStaffQuery
 fun ShowDetailQuery.Staff.toModelList(): List<ShowStaffListItemModel> {
     return edges?.filterNotNull()?.map {
         ShowStaffListItemModel(
-            name = it.node!!.name!!.full!!,
+            id = it.node!!.id,
+            name = it.node.name!!.full!!,
             image = it.node.image!!.large!!,
             role = it.role!!,
         )
@@ -17,7 +18,8 @@ fun ShowDetailQuery.Staff.toModelList(): List<ShowStaffListItemModel> {
 fun ShowStaffQuery.Staff.toModelList(): List<ShowStaffListItemModel> {
     return edges?.filterNotNull()?.map {
         ShowStaffListItemModel(
-            name = it.node!!.name!!.full!!,
+            id = it.node!!.id,
+            name = it.node.name!!.full!!,
             image = it.node.image!!.large!!,
             role = it.role!!,
         )
