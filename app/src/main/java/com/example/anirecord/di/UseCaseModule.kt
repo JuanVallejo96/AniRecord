@@ -1,5 +1,7 @@
 package com.example.anirecord.di
 
+import com.example.anirecord.domain.usecase.GetFavouritesUseCase
+import com.example.anirecord.domain.usecase.GetFavouritesUseCaseImpl
 import com.example.anirecord.domain.usecase.GetPopularUseCase
 import com.example.anirecord.domain.usecase.GetPopularUseCaseImpl
 import com.example.anirecord.domain.usecase.GetShowDetailUseCase
@@ -42,4 +44,9 @@ abstract class UseCaseModule {
     abstract fun bindSearchByNameUseCase(
         searchByNameUseCase: SearchByNameUseCaseImpl
     ): SearchByNameUseCase
+
+    @Binds
+    abstract fun bindGetFavouritesUseCase(
+        getFavouritesUseCase: GetFavouritesUseCaseImpl
+    ): GetFavouritesUseCase
 }

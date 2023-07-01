@@ -1,4 +1,4 @@
-package com.example.anirecord.ui.home
+package com.example.anirecord.ui.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ class SeriesListAdapter(private val clickHandler: SeriesClickHandler) :
     private val items = mutableListOf<ShowListItemModel>()
 
     interface SeriesClickHandler {
-        fun onClick(show: ShowListItemModel)
+        fun onShowClick(show: ShowListItemModel)
     }
 
     class SeriesViewHolder(
@@ -22,7 +22,7 @@ class SeriesListAdapter(private val clickHandler: SeriesClickHandler) :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ShowListItemModel) {
             binding.root.setOnClickListener {
-                clickHandler.onClick(item)
+                clickHandler.onShowClick(item)
             }
             binding.seriesTitle.text = item.name ?: "Unknown"
             Picasso.get().load(item.cover).into(binding.seriesCover)

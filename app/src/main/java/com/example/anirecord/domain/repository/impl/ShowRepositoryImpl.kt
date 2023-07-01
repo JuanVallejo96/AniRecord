@@ -1,19 +1,37 @@
 package com.example.anirecord.domain.repository.impl
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import com.apollographql.apollo3.ApolloClient
+import com.example.anirecord.data.database.ShowDao
+import com.example.anirecord.data.entity.ShowEntity
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
+import com.example.anirecord.domain.model.extensions.toListModel
 import com.example.anirecord.domain.model.extensions.toModel
 import com.example.anirecord.domain.repository.ShowRepository
 import com.example.anirecord.graphql.SearchQuery
 import com.example.anirecord.graphql.SeasonPopularQuery
 import com.example.anirecord.graphql.ShowDetailQuery
 import com.example.anirecord.graphql.type.MediaSeason
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 class ShowRepositoryImpl @Inject constructor(
     private val apolloClient: ApolloClient,
+    private val showDao: ShowDao,
 ) : ShowRepository {
+    override suspend fun findById(id: Int): ShowDetailModel = coroutineScope {
+        val favourite = async {
+            showDao.findById(id).value?.isFavourite ?: false
+        }
+
+        apolloClient.query(ShowDetailQuery(id)).execute().data?.Media!!.toModel().apply {
+            isFavourite = favourite.await()
+        }
+    }
+
     override suspend fun getPopularOnSeason(
         year: Int,
         season: MediaSeason,
@@ -28,11 +46,19 @@ class ShowRepositoryImpl @Inject constructor(
         return Pair(items, data.pageInfo?.hasNextPage ?: true)
     }
 
-    override suspend fun getShowById(id: Int): ShowDetailModel {
-        return apolloClient.query(ShowDetailQuery(id)).execute().data?.Media!!.toModel()
+    override fun getFavourites(): LiveData<List<ShowListItemModel>> {
+        return showDao.getFavourites().map { items ->
+            items.map(ShowEntity::toListModel)
+        }
     }
 
-    override suspend fun getSearch(
+    override suspend fun toggleFavourite(id: Int) {
+        showDao.findById(id).value?.let { item ->
+            item.isFavourite = !item.isFavourite
+        }
+    }
+
+    override suspend fun searchByQuery(
         query: String,
         page: Int
     ): Pair<List<ShowListItemModel>, Boolean>? {

@@ -19,4 +19,6 @@
     <string name="as_character_label">as %1$s</string>
     <string name="empty_search">No results</string>
     <string name="start_search">Start searching</string>
+    <string name="label_favourites">Favourites</string>
+    <string name="label_empty_favourites">Favourites is empty</string>
 </resources>

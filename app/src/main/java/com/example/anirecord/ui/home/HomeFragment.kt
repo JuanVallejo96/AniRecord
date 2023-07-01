@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anirecord.databinding.FragmentHomeBinding
 import com.example.anirecord.domain.model.ShowListItemModel
+import com.example.anirecord.ui.adapters.SeriesListAdapter
 import com.example.anirecord.ui.utils.InfiniteScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,7 +44,7 @@ class HomeFragment : Fragment(), SeriesListAdapter.SeriesClickHandler {
         return binding.root
     }
 
-    override fun onClick(show: ShowListItemModel) {
+    override fun onShowClick(show: ShowListItemModel) {
         findNavController().navigate(HomeFragmentDirections.navToDetail(show.id))
     }
 

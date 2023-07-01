@@ -1,5 +1,6 @@
 package com.example.anirecord.domain.model.extensions
 
+import com.example.anirecord.data.entity.ShowEntity
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.graphql.ShowDetailQuery
@@ -19,6 +20,14 @@ fun ShowDetailQuery.Media.toModel(): ShowDetailModel {
         nextEpisode = nextAiringEpisode,
         characters = characters?.toModelList() ?: listOf(),
         staff = staff?.toModelList() ?: listOf(),
+    )
+}
+
+fun ShowEntity.toListModel(): ShowListItemModel {
+    return ShowListItemModel(
+        id = showId,
+        name = name,
+        cover = cover,
     )
 }
 

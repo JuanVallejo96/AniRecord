@@ -12,6 +12,6 @@ class GetShowDetailUseCaseImpl @Inject constructor(
     private val showRepository: ShowRepository
 ) : GetShowDetailUseCase {
     override suspend fun invoke(id: Int): ShowDetailModel {
-        return showRepository.getShowById(id)
+        return showRepository.findById(id)
     }
 }

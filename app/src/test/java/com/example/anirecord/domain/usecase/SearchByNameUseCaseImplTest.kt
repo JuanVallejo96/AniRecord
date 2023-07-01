@@ -22,7 +22,7 @@ class SearchByNameUseCaseImplTest {
     fun testSearchByNameUseCase() = runBlocking {
         val moreItems = false
         val items = listOf(ShowListItemModel(0, "Test", ""))
-        whenever(showRepository.getSearch(anyString(), Mockito.anyInt()))
+        whenever(showRepository.searchByQuery(anyString(), Mockito.anyInt()))
             .thenReturn(Pair(items, moreItems))
 
         val result = searchByNameUseCase("Test", 0)
