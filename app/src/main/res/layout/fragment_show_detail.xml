@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/showStatusInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -230,11 +231,11 @@
                 android:id="@+id/showDetailDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/showDetailTitle"
                 app:layout_constraintStart_toStartOf="@+id/showDetailTitle"
-                app:layout_constraintTop_toBottomOf="@+id/showDetailTitle"
+                app:layout_constraintTop_toBottomOf="@+id/ShowNextEpisode"
                 app:layout_constraintVertical_bias="0.0"
                 tools:text="@tools:sample/lorem[50]" />
 
@@ -336,6 +337,17 @@
                 android:visibility="gone"
                 app:constraint_referenced_ids="showDetailStaffList,showDetailAllStaffButton,showDetailStaffLabel"
                 tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/ShowNextEpisode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="@+id/showDetailTitle"
+                app:layout_constraintStart_toStartOf="@+id/showDetailTitle"
+                app:layout_constraintTop_toBottomOf="@+id/showDetailTitle"
+                tools:text="next episode: 04/07/2023" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
