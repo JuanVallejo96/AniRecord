@@ -1,6 +1,7 @@
 package com.example.anirecord.domain.repository.impl
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import com.apollographql.apollo3.ApolloClient
 import com.example.anirecord.data.database.ShowDao
@@ -14,22 +15,22 @@ import com.example.anirecord.graphql.SearchQuery
 import com.example.anirecord.graphql.SeasonPopularQuery
 import com.example.anirecord.graphql.ShowDetailQuery
 import com.example.anirecord.graphql.type.MediaSeason
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 class ShowRepositoryImpl @Inject constructor(
     private val apolloClient: ApolloClient,
     private val showDao: ShowDao,
 ) : ShowRepository {
-    override suspend fun findById(id: Int): ShowDetailModel = coroutineScope {
-        val favourite = async {
-            showDao.findById(id).value?.isFavourite ?: false
-        }
-
-        apolloClient.query(ShowDetailQuery(id)).execute().data?.Media!!.toModel().apply {
-            isFavourite = favourite.await()
-        }
+    override fun findById(id: Int): LiveData<ShowDetailModel> = liveData {
+        val showDetail = apolloClient.query(ShowDetailQuery(id)).execute().data?.Media!!.toModel()
+        val data = showDao.findById(id)
+        emitSource(
+            data.map { showEntity ->
+                showDetail.apply {
+                    isFavourite = showEntity?.isFavourite ?: false
+                }
+            }
+        )
     }
 
     override suspend fun getPopularOnSeason(
@@ -52,10 +53,21 @@ class ShowRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun toggleFavourite(id: Int) {
-        showDao.findById(id).value?.let { item ->
-            item.isFavourite = !item.isFavourite
+    override suspend fun toggleFavourite(showDetail: ShowDetailModel) {
+        var show = showDao.getById(showDetail.id)
+        if (show == null) {
+            show = ShowEntity(
+                showId = showDetail.id,
+                name = showDetail.title!!,
+                cover = showDetail.cover!!,
+                progress = 0,
+                isFavourite = true,
+            )
+            return showDao.insert(show)
         }
+
+        show.isFavourite = !show.isFavourite
+        showDao.update(show)
     }
 
     override suspend fun searchByQuery(

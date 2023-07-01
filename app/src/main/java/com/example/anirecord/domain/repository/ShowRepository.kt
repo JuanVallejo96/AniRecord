@@ -6,7 +6,7 @@ import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.graphql.type.MediaSeason
 
 interface ShowRepository {
-    suspend fun findById(id: Int): ShowDetailModel
+    fun findById(id: Int): LiveData<ShowDetailModel>
 
     suspend fun getPopularOnSeason(
         year: Int,
@@ -16,7 +16,7 @@ interface ShowRepository {
 
     fun getFavourites(): LiveData<List<ShowListItemModel>>
 
-    suspend fun toggleFavourite(id: Int)
+    suspend fun toggleFavourite(showDetail: ShowDetailModel)
 
     suspend fun searchByQuery(
         query: String,

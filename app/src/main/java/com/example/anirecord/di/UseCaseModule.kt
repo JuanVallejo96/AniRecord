@@ -12,6 +12,8 @@ import com.example.anirecord.domain.usecase.GetVoiceActorsListUseCase
 import com.example.anirecord.domain.usecase.GetVoiceActorsListUseCaseImpl
 import com.example.anirecord.domain.usecase.SearchByNameUseCase
 import com.example.anirecord.domain.usecase.SearchByNameUseCaseImpl
+import com.example.anirecord.domain.usecase.ToggleFavouriteUseCase
+import com.example.anirecord.domain.usecase.ToggleFavouriteUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -49,4 +51,9 @@ abstract class UseCaseModule {
     abstract fun bindGetFavouritesUseCase(
         getFavouritesUseCase: GetFavouritesUseCaseImpl
     ): GetFavouritesUseCase
+
+    @Binds
+    abstract fun bindToggleFavouriteUseCase(
+        toggleFavouriteUseCase: ToggleFavouriteUseCaseImpl
+    ): ToggleFavouriteUseCase
 }

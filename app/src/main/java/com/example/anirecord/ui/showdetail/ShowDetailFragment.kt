@@ -1,15 +1,18 @@
 package com.example.anirecord.ui.showdetail
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anirecord.R
@@ -31,6 +34,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
     private var _binding: FragmentShowDetailBinding? = null
     private val vm: ShowDetailViewModel by viewModels()
     private var shortAnimationDuration by Delegates.notNull<Int>()
+    private var favMenu: MenuItem? = null
 
     private val binding get() = _binding!!
 
@@ -44,31 +48,17 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         binding.showDetailContainer.visibility = View.GONE
         shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
-        vm.uiState.observe(viewLifecycleOwner) { uiState ->
-            when (uiState) {
-                is ShowDetailViewModel.UiState.Success -> setShowInfo(uiState.show)
-                else -> {}
-            }
+        setShowMenu()
+
+        vm.show.observe(viewLifecycleOwner) { show ->
+            favMenu?.isVisible = true
+            binding.showDetailContainer.visibility = View.VISIBLE
+            binding.showDetailLoadingSpinner.visibility = View.GONE
+
+            setShowInfo(show)
         }
 
         return binding.root
-    }
-
-    private fun getDateTime(s: String): String? {
-        try {
-
-            val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                resources.configuration.locales.get(0)
-            } else {
-                resources.configuration.locale
-            }
-
-            val sdf = SimpleDateFormat("dd/MM/yyyy", locale)
-            val netDate = Date(s.toLong() * 1000)
-            return sdf.format(netDate)
-        } catch (e: Exception) {
-            return ""
-        }
     }
 
     private fun setShowInfo(show: ShowDetailModel) {
@@ -85,21 +75,9 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
             Html.fromHtml(show.description)
         }
         val (statusResource, statusLabel) = when (show.status) {
-            MediaStatus.RELEASING -> Pair(
-                R.drawable.play,
-                R.string.show_status_releasing
-            )
-
-            MediaStatus.FINISHED -> Pair(
-                R.drawable.check,
-                R.string.show_status_finished
-            )
-
-            MediaStatus.CANCELLED -> Pair(
-                R.drawable.close,
-                R.string.show_status_cancelled
-            )
-
+            MediaStatus.RELEASING -> Pair(R.drawable.play, R.string.show_status_releasing)
+            MediaStatus.FINISHED -> Pair(R.drawable.check, R.string.show_status_finished)
+            MediaStatus.CANCELLED -> Pair(R.drawable.close, R.string.show_status_cancelled)
             MediaStatus.HIATUS -> Pair(R.drawable.pause, R.string.show_status_hiatus)
             MediaStatus.NOT_YET_RELEASED -> Pair(
                 R.drawable.schedule,
@@ -108,6 +86,13 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
 
             else -> Pair(R.drawable.question_mark, R.string.show_status_unknown)
         }
+
+        val starIcon = if (show.isFavourite) {
+            R.drawable.star_filled_white
+        } else {
+            R.drawable.star_white
+        }
+        favMenu?.setIcon(starIcon)
 
         if (Objects.nonNull(show.averageScore)) {
             binding.showDetailRatingInfo.visibility = View.VISIBLE
@@ -118,6 +103,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         binding.showDetailStatusLabel.text = getString(statusLabel)
         binding.showDetailDescription.text = html
 
+        // Next episode
         if (show.nextEpisode != null) {
             if (show.nextEpisode.episode == 1) {
                 binding.ShowNextEpisode.text = requireContext().getString(
@@ -135,7 +121,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
             binding.ShowNextEpisode.visibility = View.GONE
         }
 
-
+        // Characters/Voice Actors
         if (show.characters.isNotEmpty()) {
             binding.showDetailAllCharactersButton.apply {
                 visibility = View.VISIBLE
@@ -153,6 +139,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
             }
         }
 
+        // Staff
         if (show.staff.isNotEmpty()) {
             binding.showDetailAllStaffButton.apply {
                 visibility = View.VISIBLE
@@ -169,27 +156,26 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
                 adapter = listAdapter
             }
         }
-
-        crossFade()
     }
 
-    private fun crossFade() {
-        binding.showDetailContainer.apply {
-            alpha = 0f
-            visibility = View.VISIBLE
-            animate().alpha(1f)
-                .setDuration(shortAnimationDuration.toLong())
-                .setListener(null)
-        }
+    private fun setShowMenu() {
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.show_detail_fragment_menu, menu)
+                favMenu = menu.findItem(R.id.showDetailMenuFavourite)
+            }
 
-        binding.showDetailLoadingSpinner.animate()
-            .alpha(0f)
-            .setDuration(shortAnimationDuration.toLong())
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    binding.showDetailLoadingSpinner.visibility = View.GONE
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.showDetailMenuFavourite -> {
+                        vm.toggleFavourite()
+                        true
+                    }
+
+                    else -> false
                 }
-            })
+            }
+        }, viewLifecycleOwner, Lifecycle.State.CREATED)
     }
 
     private fun clickViewAllCharacters(showId: Int) {
@@ -210,6 +196,22 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
 
     override fun onStaffClickHandler(show: ShowStaffListItemModel) {
         // TODO("Not yet implemented")
+    }
+
+    private fun getDateTime(s: String): String? {
+        return try {
+            val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                resources.configuration.locales.get(0)
+            } else {
+                resources.configuration.locale
+            }
+
+            val sdf = SimpleDateFormat("dd/MM/yyyy", locale)
+            val netDate = Date(s.toLong() * 1000)
+            sdf.format(netDate)
+        } catch (e: Exception) {
+            ""
+        }
     }
 
     override fun onDestroyView() {
