@@ -1,4 +1,4 @@
-package com.example.anirecord.ui.utils
+package com.example.anirecord.utils
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

@@ -1,5 +1,8 @@
-package com.example.anirecord.ui.utils
+package com.example.anirecord.utils
 
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
 import com.example.anirecord.graphql.type.MediaSeason
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -33,6 +36,14 @@ class Utils {
                     delay(waitMs)
                     destinationFunction(param)
                 }
+            }
+        }
+
+        fun htmlToSpanned(html: String?): Spanned {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+            } else {
+                Html.fromHtml(html)
             }
         }
     }

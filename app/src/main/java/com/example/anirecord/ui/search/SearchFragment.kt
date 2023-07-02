@@ -19,8 +19,8 @@ import com.example.anirecord.R
 import com.example.anirecord.databinding.FragmentSearchBinding
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.ui.adapters.SeriesListAdapter
-import com.example.anirecord.ui.utils.InfiniteScrollListener
-import com.example.anirecord.ui.utils.Utils
+import com.example.anirecord.utils.InfiniteScrollListener
+import com.example.anirecord.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 

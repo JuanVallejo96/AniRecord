@@ -13,7 +13,7 @@ class StaffListAdapter(
     private val items = mutableListOf<ShowStaffListItemModel>()
 
     interface StaffClickHandler {
-        fun onStaffClickHandler(voiceActor: ShowStaffListItemModel)
+        fun onStaffClickHandler(staff: ShowStaffListItemModel)
     }
 
     class StaffViewHolder(

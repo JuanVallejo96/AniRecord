@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.usecase.GetPopularUseCase
-import com.example.anirecord.ui.utils.Utils
+import com.example.anirecord.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

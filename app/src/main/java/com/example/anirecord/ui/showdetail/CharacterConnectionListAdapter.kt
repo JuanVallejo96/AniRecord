@@ -17,7 +17,7 @@ class CharacterConnectionListAdapter(
     RecyclerView.Adapter<CharacterConnectionListAdapter.CharacterViewHolder>() {
 
     interface CharacterClickHandler {
-        fun onCharacterClick(show: CharacterConnectionModel)
+        fun onCharacterClick(characterConnection: CharacterConnectionModel)
     }
 
     class CharacterViewHolder(

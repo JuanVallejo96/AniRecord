@@ -15,7 +15,7 @@ class StaffListAdapter(
     RecyclerView.Adapter<StaffListAdapter.StaffListViewHolder>() {
 
     interface StaffClickHandler {
-        fun onStaffClickHandler(show: ShowStaffListItemModel)
+        fun onStaffClickHandler(staff: ShowStaffListItemModel)
     }
 
     class StaffListViewHolder(

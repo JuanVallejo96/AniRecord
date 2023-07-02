@@ -95,6 +95,15 @@
         <action
             android:id="@+id/navToVoiceActorList"
             app:destination="@id/voiceActorListFragment" />
+
+        <action
+            android:id="@+id/navToStaffShowsList"
+            app:destination="@id/staffShowsListFragment" />
+
+        <action
+            android:id="@+id/navToVoiceActorShowsList"
+            app:destination="@id/voiceActorShowsListFragment" />
+
     </fragment>
 
     <fragment
@@ -106,6 +115,11 @@
             android:name="showId"
             app:argType="integer"
             app:nullable="false" />
+
+        <action
+            android:id="@+id/navToVoiceActorShowsList"
+            app:destination="@id/voiceActorShowsListFragment" />
+
     </fragment>
 
     <fragment
@@ -117,6 +131,42 @@
             android:name="showId"
             app:argType="integer"
             app:nullable="false" />
+
+        <action
+            android:id="@+id/navToStaffShowsList"
+            app:destination="@id/staffShowsListFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/staffShowsListFragment"
+        android:name="com.example.anirecord.ui.staffshows.StaffShowsFragment"
+        android:label="@string/label_staff_works"
+        tools:layout="@layout/fragment_staff_show_list">
+        <argument
+            android:name="staffId"
+            app:argType="integer"
+            app:nullable="false" />
+
+        <action
+            android:id="@+id/navToDetail"
+            app:destination="@id/showDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/voiceActorShowsListFragment"
+        android:name="com.example.anirecord.ui.voiceactorshows.VoiceActorShowsFragment"
+        android:label="@string/label_staff_works"
+        tools:layout="@layout/fragment_voice_actor_show_list">
+        <argument
+            android:name="staffId"
+            app:argType="integer"
+            app:nullable="false" />
+
+        <action
+            android:id="@+id/navToDetail"
+            app:destination="@id/showDetailFragment" />
 
     </fragment>
 </navigation>

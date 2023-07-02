@@ -25,6 +25,8 @@
     <string name="label_favourites">Favourites</string>
     <string name="label_empty_favourites">Favourites is empty</string>
     <string name="label_toggle_favourite">Toggle Favourite</string>
+    <string name="label_staff_works">Worked On</string>
+    <string name="unknown_label">Unknown</string>
     <string name="add">ADD</string>
     <string name="start_listing">Start creating</string>
     <string name="label_list_detail">List Detail</string>

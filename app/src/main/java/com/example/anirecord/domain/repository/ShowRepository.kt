@@ -3,6 +3,8 @@ package com.example.anirecord.domain.repository
 import androidx.lifecycle.LiveData
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
+import com.example.anirecord.domain.model.StaffShowListItemModel
+import com.example.anirecord.domain.model.VoiceActorShowsListItemModel
 import com.example.anirecord.graphql.type.MediaSeason
 
 interface ShowRepository {
@@ -22,4 +24,14 @@ interface ShowRepository {
         query: String,
         page: Int
     ): Pair<List<ShowListItemModel>, Boolean>?
+
+    suspend fun getStaffShows(
+        staffId: Int,
+        page: Int,
+    ): Pair<List<StaffShowListItemModel>, Boolean>?
+
+    suspend fun getVoiceActorShows(
+        staffId: Int,
+        page: Int,
+    ): Pair<List<VoiceActorShowsListItemModel>, Boolean>?
 }
