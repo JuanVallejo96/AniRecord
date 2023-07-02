@@ -13,6 +13,6 @@ class GetShowsOnListUseCaseImpl @Inject constructor(
     private val listRepository: ListRepository
 ) : GetShowsOnListUseCase {
     override fun invoke(idList: Int): LiveData<List<ShowListItemModel>> {
-        return listRepository.findWithShowsById(idList)
+        return listRepository.findShowsById(idList)
     }
 }

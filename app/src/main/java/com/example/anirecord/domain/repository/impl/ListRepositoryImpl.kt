@@ -23,7 +23,7 @@ class ListRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun findWithShowsById(id: Int): LiveData<List<ShowListItemModel>> {
+    override fun findShowsById(id: Int): LiveData<List<ShowListItemModel>> {
         return listDao.findWithShowsById(id).map {
             it.shows.map { showEntity ->
                 ShowListItemModel(showEntity.showId, showEntity.name, showEntity.cover)

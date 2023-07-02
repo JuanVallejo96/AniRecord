@@ -6,7 +6,7 @@ import com.example.anirecord.domain.model.ShowListItemModel
 
 interface ListRepository {
     fun getAll(): LiveData<List<ListCollectionItemModel>>
-    fun findWithShowsById(id: Int): LiveData<List<ShowListItemModel>>
+    fun findShowsById(id: Int): LiveData<List<ShowListItemModel>>
     suspend fun insert(name: String)
     suspend fun insertShowIntoList(listId: Int, showId: Int)
     suspend fun update(list: ListCollectionItemModel)
