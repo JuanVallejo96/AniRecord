@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anirecord.databinding.FragmentHomeBinding
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.ui.adapters.SeriesListAdapter
-import com.example.anirecord.ui.utils.InfiniteScrollListener
+import com.example.anirecord.utils.InfiniteScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

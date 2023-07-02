@@ -1,0 +1,15 @@
+query StaffShows($staffId: Int!, $page: Int!) {
+    Staff(id: $staffId) {
+        staffMedia(page: $page, sort: [POPULARITY, START_DATE], perPage: 100, type: ANIME) {
+            pageInfo {
+                hasNextPage
+            }
+            edges {
+                node {
+                    ...ShowListItemFragment
+                }
+                staffRole
+            }
+        }
+    }
+}

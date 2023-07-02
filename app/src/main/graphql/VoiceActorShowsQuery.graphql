@@ -1,19 +1,20 @@
-query ShowStaff($showId: Int!, $page: Int!) {
-    Media(id: $showId) {
-        staff(sort: [ROLE, RELEVANCE], page: $page, perPage: 40) {
+query VoiceActorShows($staffId: Int!, $page: Int!) {
+    Staff(id: $staffId) {
+        characters(page: $page, sort: RELEVANCE, perPage: 40) {
             pageInfo {
                 hasNextPage
             }
             edges {
-                role
                 node {
-                    id
                     name {
                         full
                     }
                     image {
                         large
                     }
+                }
+                media {
+                    ...ShowListItemFragment
                 }
             }
         }

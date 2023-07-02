@@ -6,8 +6,14 @@ import com.example.anirecord.domain.usecase.GetPopularUseCase
 import com.example.anirecord.domain.usecase.GetPopularUseCaseImpl
 import com.example.anirecord.domain.usecase.GetShowDetailUseCase
 import com.example.anirecord.domain.usecase.GetShowDetailUseCaseImpl
+import com.example.anirecord.domain.usecase.GetStaffDetailUseCase
+import com.example.anirecord.domain.usecase.GetStaffDetailUseCaseImpl
 import com.example.anirecord.domain.usecase.GetStaffListUseCase
 import com.example.anirecord.domain.usecase.GetStaffListUseCaseImpl
+import com.example.anirecord.domain.usecase.GetStaffShowsUseCase
+import com.example.anirecord.domain.usecase.GetStaffShowsUseCaseImpl
+import com.example.anirecord.domain.usecase.GetVoiceActorShowsUseCase
+import com.example.anirecord.domain.usecase.GetVoiceActorShowsUseCaseImpl
 import com.example.anirecord.domain.usecase.GetVoiceActorsListUseCase
 import com.example.anirecord.domain.usecase.GetVoiceActorsListUseCaseImpl
 import com.example.anirecord.domain.usecase.SearchByNameUseCase
@@ -56,4 +62,19 @@ abstract class UseCaseModule {
     abstract fun bindToggleFavouriteUseCase(
         toggleFavouriteUseCase: ToggleFavouriteUseCaseImpl
     ): ToggleFavouriteUseCase
+
+    @Binds
+    abstract fun bindGetStaffShowsUseCase(
+        staffShowsUseCase: GetStaffShowsUseCaseImpl
+    ): GetStaffShowsUseCase
+
+    @Binds
+    abstract fun bindGetVoiceActorShowsUseCase(
+        voiceActorShowsUseCase: GetVoiceActorShowsUseCaseImpl
+    ): GetVoiceActorShowsUseCase
+
+    @Binds
+    abstract fun bindGetStaffDetailUseCase(
+        getStaffDetailUseCase: GetStaffDetailUseCaseImpl
+    ): GetStaffDetailUseCase
 }

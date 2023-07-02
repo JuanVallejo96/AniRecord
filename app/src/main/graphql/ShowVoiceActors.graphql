@@ -15,6 +15,7 @@ query ShowVoiceActors($showId: Int!, $page: Int!) {
                 }
                 voiceActorRoles(language: JAPANESE, sort: RELEVANCE) {
                     voiceActor {
+                        id
                         name {
                             full
                         }

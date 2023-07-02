@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/voiceActorShowsListShowTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/voiceActorShowsListCharacterCover"
+        app:layout_constraintStart_toEndOf="@+id/voiceActorShowsListShowCover"
+        app:layout_constraintTop_toTopOf="@+id/voiceActorShowsListShowCover"
+        tools:text="Show Name" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/voiceActorShowsListShowCover"
+        android:layout_width="98dp"
+        android:layout_height="128dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/roundedImage"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/voiceActorShowsListCharacterCover"
+        android:layout_width="98dp"
+        android:layout_height="128dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/roundedImage"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/voiceActorShowsListCharacterName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/voiceActorShowsListCharacterCover"
+        app:layout_constraintEnd_toEndOf="@+id/voiceActorShowsListShowTitle"
+        app:layout_constraintStart_toStartOf="@+id/voiceActorShowsListShowTitle"
+        tools:text="Character Name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

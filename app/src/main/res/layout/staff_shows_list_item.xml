@@ -31,5 +31,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/showCover"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="TextView" />
+        tools:text="Show Title" />
+
+    <TextView
+        android:id="@+id/roleInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewEnd"
+        app:layout_constraintEnd_toEndOf="@+id/showTitle"
+        app:layout_constraintStart_toStartOf="@+id/showTitle"
+        app:layout_constraintTop_toBottomOf="@+id/showTitle"
+        tools:text="Role" />
 </androidx.constraintlayout.widget.ConstraintLayout>

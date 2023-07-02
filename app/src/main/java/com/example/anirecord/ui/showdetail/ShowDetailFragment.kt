@@ -2,7 +2,6 @@ package com.example.anirecord.ui.showdetail
 
 import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -21,6 +20,7 @@ import com.example.anirecord.domain.model.CharacterConnectionModel
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowStaffListItemModel
 import com.example.anirecord.graphql.type.MediaStatus
+import com.example.anirecord.utils.Utils
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -69,11 +69,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         binding.showDetailTitle.text = show.title
         binding.showDetailDateSeason.text = show.season?.name ?: ""
         binding.showDetailDateYear.text = show.year?.toString() ?: ""
-        val html = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(show.description, Html.FROM_HTML_MODE_COMPACT)
-        } else {
-            Html.fromHtml(show.description)
-        }
+        val html = Utils.htmlToSpanned(show.description)
         val (statusResource, statusLabel) = when (show.status) {
             MediaStatus.RELEASING -> Pair(R.drawable.play, R.string.show_status_releasing)
             MediaStatus.FINISHED -> Pair(R.drawable.check, R.string.show_status_finished)
@@ -190,12 +186,18 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         )
     }
 
-    override fun onCharacterClick(show: CharacterConnectionModel) {
-        // TODO("Not yet implemented")
+    override fun onCharacterClick(characterConnection: CharacterConnectionModel) {
+        characterConnection.actorId?.let { actorId ->
+            findNavController().navigate(
+                ShowDetailFragmentDirections.navToVoiceActorShowsList(actorId)
+            )
+        }
     }
 
-    override fun onStaffClickHandler(show: ShowStaffListItemModel) {
-        // TODO("Not yet implemented")
+    override fun onStaffClickHandler(staff: ShowStaffListItemModel) {
+        findNavController().navigate(
+            ShowDetailFragmentDirections.navToStaffShowsList(staff.id)
+        )
     }
 
     private fun getDateTime(s: String): String? {

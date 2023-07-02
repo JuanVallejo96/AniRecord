@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/staffDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor"
+        android:elevation="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/staffDetailCover"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/circularImage"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/staffDetailName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/staffDetailCover"
+            app:layout_constraintTop_toTopOf="@+id/staffDetailCover"
+            tools:text="Staff Name" />
+
+        <TextView
+            android:id="@+id/staffDetailDescription"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="4"
+            app:layout_constraintBottom_toBottomOf="@+id/staffDetailCover"
+            app:layout_constraintEnd_toEndOf="@+id/staffDetailName"
+            app:layout_constraintStart_toStartOf="@+id/staffDetailName"
+            app:layout_constraintTop_toBottomOf="@+id/staffDetailName"
+            tools:text="@tools:sample/lorem[50]" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/voiceActorShowList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/staffDetails"
+        tools:listitem="@layout/voice_actor_shows_list_item" />
+</androidx.constraintlayout.widget.ConstraintLayout>
