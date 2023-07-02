@@ -3,14 +3,16 @@ package com.example.anirecord.domain.usecase
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.repository.ShowRepository
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
+@RunWith(JUnit4::class)
 class SearchByNameUseCaseImplTest {
     private val showRepository: ShowRepository = mock()
     private val searchByNameUseCase: SearchByNameUseCase by lazy {
@@ -27,8 +29,8 @@ class SearchByNameUseCaseImplTest {
             .thenReturn(Pair(items, moreItems))
 
         val result = searchByNameUseCase("Test", 0)
-        assertNotNull(result)
-        assertEquals(moreItems, result!!.second)
-        assertEquals(items, result.first)
+        Assert.assertNotNull(result)
+        Assert.assertEquals(moreItems, result!!.second)
+        Assert.assertEquals(items, result.first)
     }
 }
