@@ -5,10 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.anirecord.domain.model.StaffDetailModel
 import com.example.anirecord.domain.model.VoiceActorShowsListItemModel
+import com.example.anirecord.domain.usecase.GetStaffDetailUseCase
 import com.example.anirecord.domain.usecase.GetVoiceActorShowsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,15 +19,18 @@ import javax.inject.Inject
 class VoiceActorShowsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getVoiceActorsShowsUseCase: GetVoiceActorShowsUseCase,
+    private val getStaffDetailUseCase: GetStaffDetailUseCase,
 ) : ViewModel() {
     private val id = VoiceActorShowsFragmentArgs.fromSavedStateHandle(savedStateHandle).staffId
 
     private var page = 1
     private var continueLoading = true
-    private val loadedItems: MutableList<VoiceActorShowsListItemModel> = mutableListOf()
-    private val _shows = MutableLiveData<List<VoiceActorShowsListItemModel>>(loadedItems)
 
-    val shows: LiveData<List<VoiceActorShowsListItemModel>> = _shows
+    private var details: StaffDetailModel? = null
+    private val loadedItems: MutableList<VoiceActorShowsListItemModel> = mutableListOf()
+    private val _info = MutableLiveData<UiState>()
+
+    val info: LiveData<UiState> = _info
 
     init {
         load()
@@ -33,12 +39,26 @@ class VoiceActorShowsViewModel @Inject constructor(
     fun load() {
         if (!continueLoading) return
         viewModelScope.launch(Dispatchers.IO) {
-            getVoiceActorsShowsUseCase(id, page)?.let { (newItems, hasMoreItems) ->
+            val pageLoad = async {
+                getVoiceActorsShowsUseCase(id, page)
+            }
+
+            if (page == 1) {
+                details = getStaffDetailUseCase(id)
+            }
+
+            pageLoad.await()?.let { (newItems, hasMoreItems) ->
                 continueLoading = hasMoreItems
                 loadedItems.addAll(newItems)
-                _shows.postValue(loadedItems)
                 page++
             }
+
+            _info.postValue(UiState(details, loadedItems))
         }
     }
+
+    data class UiState(
+        val details: StaffDetailModel?,
+        val shows: List<VoiceActorShowsListItemModel>
+    )
 }
