@@ -23,6 +23,5 @@ class ListDetailViewModel @Inject constructor(
 
     fun deleteShowFromList(showId: Int) = viewModelScope.launch(Dispatchers.IO) {
         deleteShowFromListUseCase(idList, showId)
-        deleteShowFromListUseCase(1, 145064) //TODO: remove when done once
     }
 }

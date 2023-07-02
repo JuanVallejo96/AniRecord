@@ -35,7 +35,6 @@ class ListDetailFragment : Fragment(), ListDetailAdapter.ListDetailItemClickHand
             layoutManager = recyclerLayoutManager
             adapter = listAdapter
         }
-        //TODO: poner nombre en la barra superior
 
         vm.shows.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
@@ -67,7 +66,6 @@ class ListDetailFragment : Fragment(), ListDetailAdapter.ListDetailItemClickHand
 
     private fun onPopupItemMenu(menuItem: MenuItem, show: ShowListItemModel): Boolean {
         return when (menuItem.itemId) {
-            //TODO: add to another list maybe (?)
             R.id.delete_show_from_list -> {
                 vm.deleteShowFromList(show.id)
                 true
