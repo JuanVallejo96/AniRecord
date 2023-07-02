@@ -8,7 +8,6 @@ import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.usecase.DeleteShowFromListUseCase
 import com.example.anirecord.domain.usecase.GetShowsOnListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +20,7 @@ class ListDetailViewModel @Inject constructor(
     private val idList = ListDetailFragmentArgs.fromSavedStateHandle(savedStateHandle).listId
     val shows: LiveData<List<ShowListItemModel>> get() = getShows(idList)
 
-    fun deleteShowFromList(showId: Int) = viewModelScope.launch(Dispatchers.IO) {
+    fun deleteShowFromList(showId: Int) = viewModelScope.launch {
         deleteShowFromListUseCase(idList, showId)
     }
 }

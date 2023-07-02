@@ -9,7 +9,6 @@ import com.example.anirecord.domain.usecase.DeleteListUseCase
 import com.example.anirecord.domain.usecase.GetAllListsUseCase
 import com.example.anirecord.domain.usecase.UpdateListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,7 +23,7 @@ class ListCollectionViewModel @Inject constructor(
 
     fun addList(name: String): Boolean {
         if (name.isBlank()) return false
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             createListUseCase(name)
         }
         return true
@@ -32,14 +31,14 @@ class ListCollectionViewModel @Inject constructor(
 
     fun updateList(list: ListCollectionItemModel, newName: String): Boolean {
         if (newName.isBlank()) return false
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             list.name = newName
             updateListUseCase(list)
         }
         return true
     }
 
-    fun deleteList(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+    fun deleteList(id: Int) = viewModelScope.launch {
         deleteListUseCase(id)
     }
 }

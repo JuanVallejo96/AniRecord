@@ -40,7 +40,16 @@ class ListCollectionFragment : Fragment(), ListCollectionAdapter.ListCollectionC
             adapter = listCollectionAdapter
         }
 
-        vm.lists.observe(viewLifecycleOwner, listCollectionAdapter::replaceAll)
+        vm.lists.observe(viewLifecycleOwner) {
+            listCollectionAdapter.replaceAll(it)
+            if (it.isEmpty()) {
+                binding.listEmptyLabel.visibility = View.VISIBLE
+                binding.listList.visibility = View.GONE
+            } else {
+                binding.listEmptyLabel.visibility = View.GONE
+                binding.listList.visibility = View.VISIBLE
+            }
+        }
 
         binding.addFab.setOnClickListener {
             showCreateDialog()

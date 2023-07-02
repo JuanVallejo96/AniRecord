@@ -10,7 +10,6 @@ import com.example.anirecord.domain.model.StaffShowListItemModel
 import com.example.anirecord.domain.usecase.GetStaffDetailUseCase
 import com.example.anirecord.domain.usecase.GetStaffShowsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,7 +37,7 @@ class StaffShowsViewModel @Inject constructor(
 
     fun load() {
         if (!continueLoading) return
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val pageLoad = async {
                 getStaffShowsUseCase(id, page)
             }

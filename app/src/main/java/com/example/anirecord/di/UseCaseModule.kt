@@ -1,7 +1,5 @@
 package com.example.anirecord.di
 
-import com.example.anirecord.domain.usecase.AddToListUseCase
-import com.example.anirecord.domain.usecase.AddToListUseCaseImpl
 import com.example.anirecord.domain.usecase.CreateListUseCase
 import com.example.anirecord.domain.usecase.CreateListUseCaseImpl
 import com.example.anirecord.domain.usecase.DeleteListUseCase
@@ -16,10 +14,10 @@ import com.example.anirecord.domain.usecase.GetPopularUseCase
 import com.example.anirecord.domain.usecase.GetPopularUseCaseImpl
 import com.example.anirecord.domain.usecase.GetShowDetailUseCase
 import com.example.anirecord.domain.usecase.GetShowDetailUseCaseImpl
-import com.example.anirecord.domain.usecase.GetStaffDetailUseCase
-import com.example.anirecord.domain.usecase.GetStaffDetailUseCaseImpl
 import com.example.anirecord.domain.usecase.GetShowsOnListUseCase
 import com.example.anirecord.domain.usecase.GetShowsOnListUseCaseImpl
+import com.example.anirecord.domain.usecase.GetStaffDetailUseCase
+import com.example.anirecord.domain.usecase.GetStaffDetailUseCaseImpl
 import com.example.anirecord.domain.usecase.GetStaffListUseCase
 import com.example.anirecord.domain.usecase.GetStaffListUseCaseImpl
 import com.example.anirecord.domain.usecase.GetStaffShowsUseCase
@@ -106,11 +104,6 @@ abstract class UseCaseModule {
     abstract fun bindCreateListUseCase(
         createListUseCase: CreateListUseCaseImpl
     ): CreateListUseCase
-
-    @Binds
-    abstract fun bindAddToListUseCase(
-        AddToListUseCase: AddToListUseCaseImpl
-    ): AddToListUseCase
 
     @Binds
     abstract fun bindUpdateListUseCase(

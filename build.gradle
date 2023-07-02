@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         // Navigation component safe args
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinAndroidVersion"
     }
 }
 

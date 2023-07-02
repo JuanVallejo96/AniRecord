@@ -20,11 +20,14 @@ import com.example.anirecord.graphql.ShowDetailQuery
 import com.example.anirecord.graphql.StaffShowsQuery
 import com.example.anirecord.graphql.VoiceActorShowsQuery
 import com.example.anirecord.graphql.type.MediaSeason
+import com.example.anirecord.utils.AppDispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ShowRepositoryImpl @Inject constructor(
     private val apolloClient: ApolloClient,
     private val showDao: ShowDao,
+    private val appDispatchers: AppDispatchers,
 ) : ShowRepository {
     override fun findById(id: Int): LiveData<ShowDetailModel> = liveData {
         val showDetail = apolloClient.query(ShowDetailQuery(id)).execute().data?.Media!!.toModel()
@@ -42,14 +45,14 @@ class ShowRepositoryImpl @Inject constructor(
         year: Int,
         season: MediaSeason,
         page: Int
-    ): Pair<List<ShowListItemModel>, Boolean>? {
+    ): Pair<List<ShowListItemModel>, Boolean>? = withContext(appDispatchers.IO) {
         val data = apolloClient.query(
             SeasonPopularQuery(page, year, season)
-        ).execute().data?.Page ?: return null
+        ).execute().data?.Page ?: return@withContext null
         val items = data.media?.filterNotNull()?.map {
             it.showListItemFragment.toModel()
         } ?: listOf()
-        return Pair(items, data.pageInfo?.hasNextPage ?: true)
+        return@withContext Pair(items, data.pageInfo?.hasNextPage ?: true)
     }
 
     override fun getFavourites(): LiveData<List<ShowListItemModel>> {
@@ -58,57 +61,58 @@ class ShowRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun toggleFavourite(showDetail: ShowDetailModel) {
-        var show = showDao.getById(showDetail.id)
-        if (show == null) {
-            show = ShowEntity(
-                showId = showDetail.id,
-                name = showDetail.title!!,
-                cover = showDetail.cover!!,
-                progress = 0,
-                isFavourite = true,
-            )
-            return showDao.insert(show)
-        }
+    override suspend fun toggleFavourite(showDetail: ShowDetailModel): Unit =
+        withContext(appDispatchers.IO) {
+            var show = showDao.getById(showDetail.id)
+            if (show == null) {
+                show = ShowEntity(
+                    showId = showDetail.id,
+                    name = showDetail.title!!,
+                    cover = showDetail.cover!!,
+                    progress = 0,
+                    isFavourite = true,
+                )
+                return@withContext showDao.insert(show)
+            }
 
-        show.isFavourite = !show.isFavourite
-        showDao.update(show)
-    }
+            show.isFavourite = !show.isFavourite
+            showDao.update(show)
+        }
 
     override suspend fun searchByQuery(
         query: String,
         page: Int
-    ): Pair<List<ShowListItemModel>, Boolean>? {
+    ): Pair<List<ShowListItemModel>, Boolean>? = withContext(appDispatchers.IO) {
         val data = apolloClient.query(
             SearchQuery(query, page)
-        ).execute().data?.Page ?: return null
+        ).execute().data?.Page ?: return@withContext null
         val items = data.media?.filterNotNull()?.map {
             it.showListItemFragment.toModel()
         } ?: listOf()
-        return Pair(items, data.pageInfo?.hasNextPage ?: false)
+        return@withContext Pair(items, data.pageInfo?.hasNextPage ?: false)
     }
 
     override suspend fun getStaffShows(
         staffId: Int,
         page: Int
-    ): Pair<List<StaffShowListItemModel>, Boolean>? {
+    ): Pair<List<StaffShowListItemModel>, Boolean>? = withContext(appDispatchers.IO) {
         val data = apolloClient.query(
             StaffShowsQuery(staffId, page)
-        ).execute().data?.Staff?.staffMedia ?: return null
+        ).execute().data?.Staff?.staffMedia ?: return@withContext null
         val items = data.edges?.filterNotNull()?.map {
             it.toModel()
         } ?: listOf()
-        return Pair(items, data.pageInfo?.hasNextPage ?: false)
+        return@withContext Pair(items, data.pageInfo?.hasNextPage ?: false)
     }
 
     override suspend fun getVoiceActorShows(
         staffId: Int,
         page: Int
-    ): Pair<List<VoiceActorShowsListItemModel>, Boolean>? {
+    ): Pair<List<VoiceActorShowsListItemModel>, Boolean>? = withContext(appDispatchers.IO) {
         val data = apolloClient.query(
             VoiceActorShowsQuery(staffId, page)
-        ).execute().data?.Staff?.characters ?: return null
+        ).execute().data?.Staff?.characters ?: return@withContext null
         val items = data.toModelList()
-        return Pair(items, data.pageInfo?.hasNextPage ?: false)
+        return@withContext Pair(items, data.pageInfo?.hasNextPage ?: false)
     }
 }

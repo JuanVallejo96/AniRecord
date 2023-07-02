@@ -10,35 +10,39 @@ import com.example.anirecord.domain.repository.StaffRepository
 import com.example.anirecord.graphql.ShowStaffQuery
 import com.example.anirecord.graphql.ShowVoiceActorsQuery
 import com.example.anirecord.graphql.StaffDetailsQuery
+import com.example.anirecord.utils.AppDispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class StaffRepositoryImpl @Inject constructor(
-    private val apolloClient: ApolloClient
+    private val apolloClient: ApolloClient,
+    private val appDispatchers: AppDispatchers,
 ) : StaffRepository {
-    override suspend fun getStaffDetails(staffId: Int): StaffDetailModel? {
-        val data = apolloClient.query(
-            StaffDetailsQuery(staffId)
-        ).execute().data?.Staff ?: return null
-        return data.toModel()
-    }
+    override suspend fun getStaffDetails(staffId: Int): StaffDetailModel? =
+        withContext(appDispatchers.IO) {
+            val data = apolloClient.query(
+                StaffDetailsQuery(staffId)
+            ).execute().data?.Staff ?: return@withContext null
+            return@withContext data.toModel()
+        }
 
     override suspend fun getShowVoiceActors(
         showId: Int,
         page: Int
-    ): Pair<List<ShowVoiceActorModel>, Boolean>? {
+    ): Pair<List<ShowVoiceActorModel>, Boolean>? = withContext(appDispatchers.IO) {
         val characters = apolloClient.query(
             ShowVoiceActorsQuery(showId, page)
-        ).execute().data?.Media?.characters ?: return null
-        return Pair(characters.toModelList(), characters.pageInfo?.hasNextPage ?: true)
+        ).execute().data?.Media?.characters ?: return@withContext null
+        return@withContext Pair(characters.toModelList(), characters.pageInfo?.hasNextPage ?: true)
     }
 
     override suspend fun getShowStaff(
         showId: Int,
         page: Int
-    ): Pair<List<ShowStaffListItemModel>, Boolean>? {
+    ): Pair<List<ShowStaffListItemModel>, Boolean>? = withContext(appDispatchers.IO) {
         val characters = apolloClient.query(
             ShowStaffQuery(showId, page)
-        ).execute().data?.Media?.staff ?: return null
-        return Pair(characters.toModelList(), characters.pageInfo?.hasNextPage ?: true)
+        ).execute().data?.Media?.staff ?: return@withContext null
+        return@withContext Pair(characters.toModelList(), characters.pageInfo?.hasNextPage ?: true)
     }
 }

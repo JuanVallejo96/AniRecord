@@ -2,8 +2,9 @@ package com.example.anirecord.domain.usecase
 
 import com.example.anirecord.domain.model.ShowStaffListItemModel
 import com.example.anirecord.domain.repository.StaffRepository
-import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
@@ -20,13 +21,13 @@ class GetStaffListUseCaseImplTest {
     @Test
     fun testGetStaffListUseCase(): Unit = runBlocking {
         val moreItems = false
-        val items = listOf(ShowStaffListItemModel("name", "image", "role"))
+        val items = listOf(ShowStaffListItemModel(0, "name", "image", "role"))
         whenever(staffRepository.getShowStaff(Mockito.anyInt(), Mockito.anyInt()))
             .thenReturn(Pair(items, moreItems))
 
         val result = getStaffListUseCase(0, 0)
-        TestCase.assertNotNull(result)
-        TestCase.assertEquals(moreItems, result!!.second)
-        TestCase.assertEquals(items, result.first)
+        assertNotNull(result)
+        assertEquals(moreItems, result!!.second)
+        assertEquals(items, result.first)
     }
 }

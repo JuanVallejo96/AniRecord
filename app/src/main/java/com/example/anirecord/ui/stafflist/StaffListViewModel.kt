@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.anirecord.domain.model.ShowStaffListItemModel
 import com.example.anirecord.domain.usecase.GetStaffListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,7 +30,7 @@ class StaffListViewModel @Inject constructor(
 
     fun load() {
         if (!continueLoading) return
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             getShowStaffUseCase(showId, page)?.let { (newItems, hasMoreItems) ->
                 loadedItems.addAll(newItems)
                 items.postValue(loadedItems)

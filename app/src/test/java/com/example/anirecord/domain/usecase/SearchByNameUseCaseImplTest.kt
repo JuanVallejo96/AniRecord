@@ -2,8 +2,9 @@ package com.example.anirecord.domain.usecase
 
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.repository.ShowRepository
-import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito
@@ -26,8 +27,8 @@ class SearchByNameUseCaseImplTest {
             .thenReturn(Pair(items, moreItems))
 
         val result = searchByNameUseCase("Test", 0)
-        TestCase.assertNotNull(result)
-        TestCase.assertEquals(moreItems, result!!.second)
-        TestCase.assertEquals(items, result.first)
+        assertNotNull(result)
+        assertEquals(moreItems, result!!.second)
+        assertEquals(items, result.first)
     }
 }
