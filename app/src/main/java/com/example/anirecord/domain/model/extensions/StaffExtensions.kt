@@ -1,8 +1,19 @@
 package com.example.anirecord.domain.model.extensions
 
 import com.example.anirecord.domain.model.ShowStaffListItemModel
+import com.example.anirecord.domain.model.StaffDetailModel
 import com.example.anirecord.graphql.ShowDetailQuery
 import com.example.anirecord.graphql.ShowStaffQuery
+import com.example.anirecord.graphql.StaffDetailsQuery
+
+fun StaffDetailsQuery.Staff.toModel(): StaffDetailModel {
+    return StaffDetailModel(
+        id = id,
+        name = name!!.full!!,
+        cover = image!!.large!!,
+        description = description,
+    )
+}
 
 fun ShowDetailQuery.Staff.toModelList(): List<ShowStaffListItemModel> {
     return edges?.filterNotNull()?.map {

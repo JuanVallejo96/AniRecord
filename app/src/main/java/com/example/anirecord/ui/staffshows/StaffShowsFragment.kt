@@ -1,6 +1,7 @@
 package com.example.anirecord.ui.staffshows
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anirecord.databinding.FragmentStaffShowListBinding
 import com.example.anirecord.domain.model.StaffShowListItemModel
-import com.example.anirecord.ui.utils.InfiniteScrollListener
+import com.example.anirecord.utils.InfiniteScrollListener
+import com.example.anirecord.utils.Utils
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +38,16 @@ class StaffShowsFragment : Fragment(), StaffShowsAdapter.StaffShowClickHandler {
             addOnScrollListener(InfiniteScrollListener(vm::load, recyclerLayoutManager))
         }
 
-        vm.shows.observe(viewLifecycleOwner, listAdapter::update)
+        vm.info.observe(viewLifecycleOwner) { info ->
+            listAdapter.update(info.shows)
+            info.details?.let { details ->
+                bindings.staffDetails.visibility = View.VISIBLE
+                bindings.staffDetailName.text = details.name
+                Picasso.get().load(details.cover).into(bindings.staffDetailCover)
+                bindings.staffDetailDescription.text = Utils.htmlToSpanned(details.description)
+                bindings.staffDetailDescription.movementMethod = LinkMovementMethod.getInstance()
+            }
+        }
 
         return bindings.root
     }

@@ -6,6 +6,8 @@ import com.example.anirecord.domain.usecase.GetPopularUseCase
 import com.example.anirecord.domain.usecase.GetPopularUseCaseImpl
 import com.example.anirecord.domain.usecase.GetShowDetailUseCase
 import com.example.anirecord.domain.usecase.GetShowDetailUseCaseImpl
+import com.example.anirecord.domain.usecase.GetStaffDetailUseCase
+import com.example.anirecord.domain.usecase.GetStaffDetailUseCaseImpl
 import com.example.anirecord.domain.usecase.GetStaffListUseCase
 import com.example.anirecord.domain.usecase.GetStaffListUseCaseImpl
 import com.example.anirecord.domain.usecase.GetStaffShowsUseCase
@@ -70,4 +72,9 @@ abstract class UseCaseModule {
     abstract fun bindGetVoiceActorShowsUseCase(
         voiceActorShowsUseCase: GetVoiceActorShowsUseCaseImpl
     ): GetVoiceActorShowsUseCase
+
+    @Binds
+    abstract fun bindGetStaffDetailUseCase(
+        getStaffDetailUseCase: GetStaffDetailUseCaseImpl
+    ): GetStaffDetailUseCase
 }

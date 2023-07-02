@@ -3,15 +3,25 @@ package com.example.anirecord.domain.repository.impl
 import com.apollographql.apollo3.ApolloClient
 import com.example.anirecord.domain.model.ShowStaffListItemModel
 import com.example.anirecord.domain.model.ShowVoiceActorModel
+import com.example.anirecord.domain.model.StaffDetailModel
+import com.example.anirecord.domain.model.extensions.toModel
 import com.example.anirecord.domain.model.extensions.toModelList
 import com.example.anirecord.domain.repository.StaffRepository
 import com.example.anirecord.graphql.ShowStaffQuery
 import com.example.anirecord.graphql.ShowVoiceActorsQuery
+import com.example.anirecord.graphql.StaffDetailsQuery
 import javax.inject.Inject
 
 class StaffRepositoryImpl @Inject constructor(
     private val apolloClient: ApolloClient
 ) : StaffRepository {
+    override suspend fun getStaffDetails(staffId: Int): StaffDetailModel? {
+        val data = apolloClient.query(
+            StaffDetailsQuery(staffId)
+        ).execute().data?.Staff ?: return null
+        return data.toModel()
+    }
+
     override suspend fun getShowVoiceActors(
         showId: Int,
         page: Int

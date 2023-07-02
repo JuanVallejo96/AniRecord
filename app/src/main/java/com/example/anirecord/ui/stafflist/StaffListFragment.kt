@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anirecord.databinding.FragmentStaffListBinding
 import com.example.anirecord.domain.model.ShowStaffListItemModel
-import com.example.anirecord.ui.utils.InfiniteScrollListener
+import com.example.anirecord.utils.InfiniteScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anirecord.databinding.FragmentVoiceActorListBinding
 import com.example.anirecord.domain.model.ShowVoiceActorModel
-import com.example.anirecord.ui.utils.InfiniteScrollListener
+import com.example.anirecord.utils.InfiniteScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

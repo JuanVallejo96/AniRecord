@@ -1,0 +1,12 @@
+query StaffDetails($staffId: Int!) {
+    Staff(id: $staffId) {
+        id
+        name {
+            full
+        }
+        image {
+            large
+        }
+        description(asHtml: true)
+    }
+}
