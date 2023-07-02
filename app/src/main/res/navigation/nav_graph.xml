@@ -44,6 +44,40 @@
 
     </fragment>
 
+
+    <fragment
+        android:id="@+id/listCollectionFragment"
+        android:name="com.example.anirecord.ui.listcollection.ListCollectionFragment"
+        android:label="@string/label_list_collection"
+        tools:layout="@layout/fragment_list_collection">
+
+        <action
+            android:id="@+id/navToList"
+            app:destination="@id/listDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/listDetailFragment"
+        android:name="com.example.anirecord.ui.listdetail.ListDetailFragment"
+        android:label="{listName}"
+        tools:layout="@layout/fragment_list_detail">
+        <argument
+            android:name="listId"
+            app:argType="integer"
+            app:nullable="false" />
+
+        <argument
+            android:name="listName"
+            app:argType="string"
+            app:nullable="false" />
+
+        <action
+            android:id="@+id/navToDetail"
+            app:destination="@id/showDetailFragment" />
+
+    </fragment>
+
     <fragment
         android:id="@+id/showDetailFragment"
         android:name="com.example.anirecord.ui.showdetail.ShowDetailFragment"

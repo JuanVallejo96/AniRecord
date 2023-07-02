@@ -13,5 +13,10 @@
             android:id="@+id/favouritesFragment"
             android:icon="@drawable/star_filled_white"
             android:title="@string/label_favourites" />
+
+        <item
+            android:id="@+id/listCollectionFragment"
+            android:icon="@drawable/list"
+            android:title="@string/label_list_collection" />
     </group>
 </menu>
