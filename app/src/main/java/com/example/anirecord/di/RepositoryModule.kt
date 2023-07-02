@@ -1,7 +1,9 @@
 package com.example.anirecord.di
 
+import com.example.anirecord.domain.repository.ListRepository
 import com.example.anirecord.domain.repository.ShowRepository
 import com.example.anirecord.domain.repository.StaffRepository
+import com.example.anirecord.domain.repository.impl.ListRepositoryImpl
 import com.example.anirecord.domain.repository.impl.ShowRepositoryImpl
 import com.example.anirecord.domain.repository.impl.StaffRepositoryImpl
 import dagger.Binds
@@ -16,6 +18,11 @@ abstract class RepositoryModule {
     abstract fun bindShowRepository(
         showRepositoryImpl: ShowRepositoryImpl
     ): ShowRepository
+
+    @Binds
+    abstract fun bindListRepository(
+        listRepositoryImpl: ListRepositoryImpl
+    ): ListRepository
 
     @Binds
     abstract fun bindStaffRepository(
