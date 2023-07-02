@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,11 +17,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anirecord.R
 import com.example.anirecord.databinding.FragmentShowDetailBinding
+import com.example.anirecord.databinding.ShowDetailBottomSheetBinding
 import com.example.anirecord.domain.model.CharacterConnectionModel
+import com.example.anirecord.domain.model.ListCollectionItemModel
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowStaffListItemModel
 import com.example.anirecord.graphql.type.MediaStatus
+import com.example.anirecord.ui.adapters.ShowDetailBottomSheetListsAdapter
 import com.example.anirecord.utils.Utils
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -30,7 +35,8 @@ import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterClickHandler,
-    StaffListAdapter.StaffClickHandler {
+    StaffListAdapter.StaffClickHandler,
+    ShowDetailBottomSheetListsAdapter.ShowDetailBottomSheetListsClickHandler {
     private var _binding: FragmentShowDetailBinding? = null
     private val vm: ShowDetailViewModel by viewModels()
     private var shortAnimationDuration by Delegates.notNull<Int>()
@@ -168,10 +174,60 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
                         true
                     }
 
+                    R.id.showDetailMoreMenu -> {
+                        PopupMenu(context, view).apply {
+                            setOnMenuItemClickListener {
+                                onPopupItemMenu(it)
+                            }
+                            show()
+                        }
+                        true
+                    }
+
                     else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.CREATED)
+    }
+
+    private fun onPopupItemMenu(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.add_to_list -> {
+                showLists()
+                true
+            }
+
+            else -> false
+        }
+    }
+
+    private fun showLists(): Boolean {
+        //TODO: añadir vm.lists y checkear en las que ya está (esto último aún no está en el vm)
+        val dialog = BottomSheetDialog(requireContext())
+        val dialogLayoutInflater = dialog.layoutInflater
+        val dialogBindings = ShowDetailBottomSheetBinding.inflate(
+            dialogLayoutInflater,
+            binding.root,
+            false,
+        )
+
+        dialog.setContentView(dialogBindings.root)
+        val listAdapter = ShowDetailBottomSheetListsAdapter(this)
+        val recyclerLayoutManager = LinearLayoutManager(context)
+        dialogBindings.showDetailListLists.apply {
+            layoutManager = recyclerLayoutManager
+            adapter = listAdapter
+        }
+
+        vm.lists.observe(dialog) {}
+        dialog.setCancelable(true)
+        dialog.show()
+        return true
+    }
+
+    override fun onClick(list: ListCollectionItemModel) {
+        vm.toggleList(list.id)
+        //TODO: set checked visibility
     }
 
     private fun clickViewAllCharacters(showId: Int) {

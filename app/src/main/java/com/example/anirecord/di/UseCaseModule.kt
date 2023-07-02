@@ -1,5 +1,7 @@
 package com.example.anirecord.di
 
+import com.example.anirecord.domain.usecase.AddToListUseCase
+import com.example.anirecord.domain.usecase.AddToListUseCaseImpl
 import com.example.anirecord.domain.usecase.CreateListUseCase
 import com.example.anirecord.domain.usecase.CreateListUseCaseImpl
 import com.example.anirecord.domain.usecase.DeleteListUseCase
@@ -30,6 +32,8 @@ import com.example.anirecord.domain.usecase.SearchByNameUseCase
 import com.example.anirecord.domain.usecase.SearchByNameUseCaseImpl
 import com.example.anirecord.domain.usecase.ToggleFavouriteUseCase
 import com.example.anirecord.domain.usecase.ToggleFavouriteUseCaseImpl
+import com.example.anirecord.domain.usecase.ToggleListUseCase
+import com.example.anirecord.domain.usecase.ToggleListUseCaseImpl
 import com.example.anirecord.domain.usecase.UpdateListUseCase
 import com.example.anirecord.domain.usecase.UpdateListUseCaseImpl
 import dagger.Binds
@@ -116,7 +120,17 @@ abstract class UseCaseModule {
     ): DeleteListUseCase
 
     @Binds
+    abstract fun bindAddToListUseCase(
+        addToListUseCase: AddToListUseCaseImpl
+    ): AddToListUseCase
+
+    @Binds
     abstract fun bindDeleteShowFromListUseCase(
         deleteShowFromListUseCase: DeleteShowFromListUseCaseImpl
     ): DeleteShowFromListUseCase
+
+    @Binds
+    abstract fun bindToggleListUseCase(
+        toggleListUseCase: ToggleListUseCaseImpl
+    ): ToggleListUseCase
 }

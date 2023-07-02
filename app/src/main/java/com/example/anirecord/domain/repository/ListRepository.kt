@@ -12,4 +12,5 @@ interface ListRepository {
     suspend fun update(list: ListCollectionItemModel)
     suspend fun delete(id: Int)
     suspend fun deleteShowFromList(listId: Int, showId: Int)
+    suspend fun toggleList(listId: Int, showId: Int)
 }

@@ -58,4 +58,12 @@ class ListRepositoryImpl @Inject constructor(
         withContext(appDispatchers.IO) {
             listDao.deleteShowFromList(listId, showId)
         }
+
+    override suspend fun toggleList(listId: Int, showId: Int) {
+        if (listDao.getListWithShow(listId, showId) != null) {
+            deleteShowFromList(listId, showId)
+        } else {
+            insertShowIntoList(listId, showId)
+        }
+    }
 }

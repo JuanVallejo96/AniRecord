@@ -38,4 +38,6 @@
     <string name="delete_list">Delete list</string>
     <string name="check_image_content_description">check</string>
     <string name="add_list_input_hint_label">List name</string>
+    <string name="show_detail_more_menu">more options</string>
+    <string name="add_to_list">Add to list</string>
 </resources>

@@ -41,4 +41,9 @@ interface ListDao {
 
     @Query("DELETE FROM ${Constants.DB_LIST_SHOW_XREFF_TABLE_NAME} WHERE listId = :listId AND showId = :showId")
     fun deleteShowFromList(listId: Int, showId: Int)
+
+    @Query("SELECT * FROM ${Constants.DB_LIST_SHOW_XREFF_TABLE_NAME} WHERE listId = :listId AND showId = :showId")
+    @Transaction
+    fun getListWithShow(listId: Int, showId: Int): ListWithShows?
+    //TODO fix: no le gusta el tipo del valor de retorno (?)
 }
