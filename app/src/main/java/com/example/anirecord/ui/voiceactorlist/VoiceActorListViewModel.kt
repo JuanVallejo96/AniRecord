@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.anirecord.domain.model.ShowVoiceActorModel
 import com.example.anirecord.domain.usecase.GetVoiceActorsListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,7 +30,7 @@ class VoiceActorListViewModel @Inject constructor(
 
     fun load() {
         if (!continueLoading) return
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             getShowVoiceActorsUseCase(showId, page)?.let { (items, hasMoreItems) ->
                 continueLoading = hasMoreItems
                 loadedVoiceActors.addAll(items)

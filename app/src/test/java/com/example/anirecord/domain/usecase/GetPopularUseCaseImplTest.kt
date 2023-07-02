@@ -3,11 +3,11 @@ package com.example.anirecord.domain.usecase
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.repository.ShowRepository
 import com.example.anirecord.graphql.type.MediaSeason
-import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
-import org.mockito.Mockito.anyInt
+import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever

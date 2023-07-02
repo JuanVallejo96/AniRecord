@@ -1,6 +1,7 @@
 package com.example.anirecord.domain.usecase
 
 import com.example.anirecord.domain.repository.ListRepository
+import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 interface DeleteListUseCase {
@@ -10,7 +11,7 @@ interface DeleteListUseCase {
 class DeleteListUseCaseImpl @Inject constructor(
     private val listRepository: ListRepository
 ) : DeleteListUseCase {
-    override suspend fun invoke(id: Int) {
+    override suspend fun invoke(id: Int) = coroutineScope {
         listRepository.delete(id)
     }
 }

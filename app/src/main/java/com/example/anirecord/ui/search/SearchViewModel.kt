@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.usecase.SearchByNameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,7 +31,7 @@ class SearchViewModel @Inject constructor(
 
         page = 1
         lastQuery = query
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             searchUseCase(
                 query,
                 page,
@@ -53,7 +52,7 @@ class SearchViewModel @Inject constructor(
 
     fun keepLoading() {
         if (!continueLoading) return
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             searchUseCase(
                 lastQuery,
                 page,

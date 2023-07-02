@@ -37,13 +37,13 @@ class ListDetailFragment : Fragment(), ListDetailAdapter.ListDetailItemClickHand
         }
 
         vm.shows.observe(viewLifecycleOwner) {
+            listAdapter.replaceAll(it)
             if (it.isEmpty()) {
                 binding.EmptyListLabel.visibility = View.VISIBLE
                 binding.ListDetailShowList.visibility = View.GONE
             } else {
                 binding.EmptyListLabel.visibility = View.GONE
                 binding.ListDetailShowList.visibility = View.VISIBLE
-                listAdapter.replaceAll(it)
             }
         }
 

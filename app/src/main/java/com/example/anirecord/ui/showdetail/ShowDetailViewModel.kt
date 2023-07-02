@@ -9,7 +9,6 @@ import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.usecase.GetShowDetailUseCase
 import com.example.anirecord.domain.usecase.ToggleFavouriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,7 +27,7 @@ class ShowDetailViewModel @Inject constructor(
         }
 
     fun toggleFavourite() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             _show?.let {
                 toggleFavouriteUseCase(it)
             }

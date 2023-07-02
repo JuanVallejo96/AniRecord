@@ -7,10 +7,13 @@ import com.example.anirecord.data.entity.ListEntity
 import com.example.anirecord.domain.model.ListCollectionItemModel
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.repository.ListRepository
+import com.example.anirecord.utils.AppDispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ListRepositoryImpl @Inject constructor(
-    private val listDao: ListDao
+    private val listDao: ListDao,
+    private val appDispatchers: AppDispatchers,
 ) : ListRepository {
     override fun getAll(): LiveData<List<ListCollectionItemModel>> {
         return listDao.getAll().map {
@@ -28,28 +31,31 @@ class ListRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun insert(name: String) {
+    override suspend fun insert(name: String) = withContext(appDispatchers.IO) {
         listDao.insert(ListEntity(0, name))
     }
 
-    override suspend fun insertShowIntoList(listId: Int, showId: Int) {
-        listDao.insertShowInList(listId, showId)
-    }
-
-    override suspend fun update(list: ListCollectionItemModel) {
-        listDao.getById(list.id)?.let {
-            it.name = list.name
-            listDao.update(it)
+    override suspend fun insertShowIntoList(listId: Int, showId: Int) =
+        withContext(appDispatchers.IO) {
+            listDao.insertShowInList(listId, showId)
         }
-    }
 
-    override suspend fun delete(id: Int) {
+    override suspend fun update(list: ListCollectionItemModel): Unit =
+        withContext(appDispatchers.IO) {
+            listDao.getById(list.id)?.let {
+                it.name = list.name
+                listDao.update(it)
+            }
+        }
+
+    override suspend fun delete(id: Int): Unit = withContext(appDispatchers.IO) {
         listDao.getById(id)?.let {
             listDao.delete(it)
         }
     }
 
-    override suspend fun deleteShowFromList(listId: Int, showId: Int) {
-        listDao.deleteShowFromList(listId, showId)
-    }
+    override suspend fun deleteShowFromList(listId: Int, showId: Int): Unit =
+        withContext(appDispatchers.IO) {
+            listDao.deleteShowFromList(listId, showId)
+        }
 }

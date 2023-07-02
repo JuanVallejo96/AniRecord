@@ -42,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinAndroidVersion"
     implementation "androidx.appcompat:appcompat:$androidxAppcompatVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     implementation "com.google.android.material:material:$materialVersion"
@@ -79,10 +80,13 @@ dependencies {
 
     // Testing
     testImplementation "junit:junit:$junitVersion"
-    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+    testImplementation "androidx.arch.core:core-testing:$androidxCoreTestingVersion"
+    testImplementation "androidx.test.ext:junit-ktx:$androidxJunitVersion"
+    testImplementation "androidx.test:core-ktx:$androidxTestKotlinCoreVersion"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
 }
 
