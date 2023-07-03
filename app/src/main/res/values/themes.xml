@@ -20,7 +20,7 @@
 
     <style name="roundedImage">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/border_raduis</item>
+        <item name="cornerSize">@dimen/border_radius</item>
     </style>
 
     <style name="circularImage">

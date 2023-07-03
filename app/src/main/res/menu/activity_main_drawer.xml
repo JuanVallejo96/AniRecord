@@ -20,6 +20,11 @@
             android:title="@string/label_watched" />
 
         <item
+            android:id="@+id/watchingFragment"
+            android:icon="@drawable/track_changes"
+            android:title="@string/label_watching" />
+
+        <item
             android:id="@+id/pendingFragment"
             android:icon="@drawable/bookmark"
             android:title="@string/label_pending" />

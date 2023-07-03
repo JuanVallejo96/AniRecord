@@ -9,11 +9,13 @@ import com.example.anirecord.data.entity.ShowEntity
 import com.example.anirecord.domain.model.ListCollectionItemModel
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
+import com.example.anirecord.domain.model.ShowProgressListItemModel
 import com.example.anirecord.domain.model.StaffShowListItemModel
 import com.example.anirecord.domain.model.VoiceActorShowsListItemModel
 import com.example.anirecord.domain.model.extensions.toListModel
 import com.example.anirecord.domain.model.extensions.toModel
 import com.example.anirecord.domain.model.extensions.toModelList
+import com.example.anirecord.domain.model.extensions.toProgressListModel
 import com.example.anirecord.domain.repository.ShowRepository
 import com.example.anirecord.graphql.SearchQuery
 import com.example.anirecord.graphql.SeasonPopularQuery
@@ -113,6 +115,12 @@ class ShowRepositoryImpl @Inject constructor(
     override fun getWatched(): LiveData<List<ShowListItemModel>> {
         return showDao.getWatched().map { items ->
             items.map(ShowEntity::toListModel)
+        }
+    }
+
+    override fun getWatching(): LiveData<List<ShowProgressListItemModel>> {
+        return showDao.getWatching().map { items ->
+            items.map(ShowEntity::toProgressListModel)
         }
     }
 
