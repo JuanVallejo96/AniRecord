@@ -31,7 +31,7 @@ class ListDetailFragment : Fragment(), ListDetailAdapter.ListDetailItemClickHand
 
         val listAdapter = ListDetailAdapter(this)
         val recyclerLayoutManager = LinearLayoutManager(context)
-        binding.ListDetailShowList.apply {
+        binding.showDetailShowList.apply {
             layoutManager = recyclerLayoutManager
             adapter = listAdapter
         }
@@ -39,11 +39,11 @@ class ListDetailFragment : Fragment(), ListDetailAdapter.ListDetailItemClickHand
         vm.shows.observe(viewLifecycleOwner) {
             listAdapter.replaceAll(it)
             if (it.isEmpty()) {
-                binding.EmptyListLabel.visibility = View.VISIBLE
-                binding.ListDetailShowList.visibility = View.GONE
+                binding.listDetailEmptyLabel.visibility = View.VISIBLE
+                binding.showDetailShowList.visibility = View.GONE
             } else {
-                binding.EmptyListLabel.visibility = View.GONE
-                binding.ListDetailShowList.visibility = View.VISIBLE
+                binding.listDetailEmptyLabel.visibility = View.GONE
+                binding.showDetailShowList.visibility = View.VISIBLE
             }
         }
 

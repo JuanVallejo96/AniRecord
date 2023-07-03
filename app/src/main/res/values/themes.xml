@@ -14,9 +14,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.AniRecord.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.AniRecord.AppBarOverlay" parent="ThemeOverlay.Material3.Dark.ActionBar" />
 
-    <style name="Theme.AniRecord.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.AniRecord.PopupOverlay" parent="ThemeOverlay.Material3.Light" />
 
     <style name="roundedImage">
         <item name="cornerFamily">rounded</item>

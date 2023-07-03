@@ -2,6 +2,7 @@ package com.example.anirecord.domain.repository
 
 import androidx.lifecycle.LiveData
 import com.example.anirecord.domain.model.ListCollectionItemModel
+import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
 
 interface ListRepository {
@@ -12,5 +13,5 @@ interface ListRepository {
     suspend fun update(list: ListCollectionItemModel)
     suspend fun delete(id: Int)
     suspend fun deleteShowFromList(listId: Int, showId: Int)
-    suspend fun toggleList(listId: Int, showId: Int)
+    suspend fun toggleList(listId: Int, showDetail: ShowDetailModel)
 }

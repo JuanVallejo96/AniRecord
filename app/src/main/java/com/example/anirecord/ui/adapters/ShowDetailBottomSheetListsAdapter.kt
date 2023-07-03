@@ -3,30 +3,34 @@ package com.example.anirecord.ui.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.anirecord.databinding.BottomSheetViewListItemBinding
 import com.example.anirecord.domain.model.ListCollectionItemModel
+import com.google.android.material.checkbox.MaterialCheckBox
 
 class ShowDetailBottomSheetListsAdapter(
     private val clickHandler: ShowDetailBottomSheetListsClickHandler,
 ) : RecyclerView.Adapter<ShowDetailBottomSheetListsAdapter.ShowDetailBottomSheetListsViewHolder>() {
-    private val items = mutableListOf<ListCollectionItemModel>()
+    private val items = mutableListOf<Pair<ListCollectionItemModel, Boolean>>()
 
     interface ShowDetailBottomSheetListsClickHandler {
-        fun onClick(list: ListCollectionItemModel)
+        fun onListSelectorClick(list: ListCollectionItemModel)
     }
 
     class ShowDetailBottomSheetListsViewHolder(
         private val binding: BottomSheetViewListItemBinding,
         private val clickHandler: ShowDetailBottomSheetListsClickHandler,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ListCollectionItemModel) {
+        fun bind(item: ListCollectionItemModel, checked: Boolean) {
             binding.root.setOnClickListener {
-                clickHandler.onClick(item)
+                clickHandler.onListSelectorClick(item)
             }
             binding.textView.text = item.name
-            binding.imageView.isVisible = false
+            binding.checkBox.checkedState = if (checked) {
+                MaterialCheckBox.STATE_CHECKED
+            } else {
+                MaterialCheckBox.STATE_UNCHECKED
+            }
         }
     }
 
@@ -43,13 +47,14 @@ class ShowDetailBottomSheetListsAdapter(
     }
 
     override fun onBindViewHolder(holder: ShowDetailBottomSheetListsViewHolder, position: Int) {
-        holder.bind(items[position])
+        val (item, checked) = items[position]
+        holder.bind(item, checked)
     }
 
     override fun getItemCount(): Int = items.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun replaceAll(lists: List<ListCollectionItemModel>) {
+    fun replaceAll(lists: List<Pair<ListCollectionItemModel, Boolean>>) {
         items.clear()
         items.addAll(lists)
         notifyDataSetChanged()

@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -174,13 +173,8 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
                         true
                     }
 
-                    R.id.showDetailMoreMenu -> {
-                        PopupMenu(context, view).apply {
-                            setOnMenuItemClickListener {
-                                onPopupItemMenu(it)
-                            }
-                            show()
-                        }
+                    R.id.add_to_list -> {
+                        showLists()
                         true
                     }
 
@@ -190,19 +184,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         }, viewLifecycleOwner, Lifecycle.State.CREATED)
     }
 
-    private fun onPopupItemMenu(menuItem: MenuItem): Boolean {
-        return when (menuItem.itemId) {
-            R.id.add_to_list -> {
-                showLists()
-                true
-            }
-
-            else -> false
-        }
-    }
-
     private fun showLists(): Boolean {
-        //TODO: añadir vm.lists y checkear en las que ya está (esto último aún no está en el vm)
         val dialog = BottomSheetDialog(requireContext())
         val dialogLayoutInflater = dialog.layoutInflater
         val dialogBindings = ShowDetailBottomSheetBinding.inflate(
@@ -214,20 +196,22 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         dialog.setContentView(dialogBindings.root)
         val listAdapter = ShowDetailBottomSheetListsAdapter(this)
         val recyclerLayoutManager = LinearLayoutManager(context)
-        dialogBindings.showDetailListLists.apply {
+        dialogBindings.showDetailListSelectorRecycler.apply {
             layoutManager = recyclerLayoutManager
             adapter = listAdapter
         }
 
-        vm.lists.observe(dialog) {}
+        vm.lists.observe(dialog) {
+            listAdapter.replaceAll(it)
+        }
+
         dialog.setCancelable(true)
         dialog.show()
         return true
     }
 
-    override fun onClick(list: ListCollectionItemModel) {
+    override fun onListSelectorClick(list: ListCollectionItemModel) {
         vm.toggleList(list.id)
-        //TODO: set checked visibility
     }
 
     private fun clickViewAllCharacters(showId: Int) {

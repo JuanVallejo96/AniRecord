@@ -6,6 +6,7 @@ import androidx.lifecycle.map
 import com.apollographql.apollo3.ApolloClient
 import com.example.anirecord.data.database.ShowDao
 import com.example.anirecord.data.entity.ShowEntity
+import com.example.anirecord.domain.model.ListCollectionItemModel
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.model.StaffShowListItemModel
@@ -114,5 +115,18 @@ class ShowRepositoryImpl @Inject constructor(
         ).execute().data?.Staff?.characters ?: return@withContext null
         val items = data.toModelList()
         return@withContext Pair(items, data.pageInfo?.hasNextPage ?: false)
+    }
+
+    override fun getShowWithLists(showId: Int): LiveData<List<ListCollectionItemModel>> {
+        return showDao.getShowWithLists(showId).map {
+            it.flatMap {
+                it.lists.map {
+                    ListCollectionItemModel(
+                        it.listId,
+                        it.name,
+                    )
+                }
+            }
+        }
     }
 }
