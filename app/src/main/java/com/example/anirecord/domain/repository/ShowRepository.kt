@@ -25,6 +25,8 @@ interface ShowRepository {
 
     suspend fun togglePending(showDetail: ShowDetailModel)
 
+    fun getWatched(): LiveData<List<ShowListItemModel>>
+
     suspend fun searchByQuery(
         query: String,
         page: Int

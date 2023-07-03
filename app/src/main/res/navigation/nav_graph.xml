@@ -56,6 +56,18 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/watchedFragment"
+        android:name="com.example.anirecord.ui.watched.WatchedFragment"
+        android:label="@string/label_watched"
+        tools:layout="@layout/fragment_watched">
+
+        <action
+            android:id="@+id/navToDetail"
+            app:destination="@id/showDetailFragment" />
+
+    </fragment>
+
 
     <fragment
         android:id="@+id/listCollectionFragment"

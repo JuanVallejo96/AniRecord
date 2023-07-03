@@ -110,6 +110,12 @@ class ShowRepositoryImpl @Inject constructor(
             showDao.update(show)
         }
 
+    override fun getWatched(): LiveData<List<ShowListItemModel>> {
+        return showDao.getWatched().map { items ->
+            items.map(ShowEntity::toListModel)
+        }
+    }
+
     override suspend fun searchByQuery(
         query: String,
         page: Int

@@ -32,6 +32,9 @@ interface ShowDao {
     @Query("SELECT * FROM ${Constants.DB_SHOW_TABLE_NAME} WHERE isPending = 1")
     fun getPending(): LiveData<List<ShowEntity>>
 
+    @Query("SELECT * FROM ${Constants.DB_SHOW_TABLE_NAME} WHERE progress = totalEpisodes AND totalEpisodes IS NOT NULL")
+    fun getWatched(): LiveData<List<ShowEntity>>
+
     @Query("SELECT * FROM ${Constants.DB_SHOW_TABLE_NAME} WHERE showId = :id")
     @Transaction
     fun getShowWithLists(id: Int): LiveData<List<ShowWithLists>>
