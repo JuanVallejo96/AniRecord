@@ -42,4 +42,6 @@
     <string name="add_to_list">Add to lists</string>
     <string name="label_empty_pending">Pending is empty</string>
     <string name="label_pending">Pending</string>
+    <string name="label_watched">Watched</string>
+    <string name="label_empty_watched">Watched is empty</string>
 </resources>
