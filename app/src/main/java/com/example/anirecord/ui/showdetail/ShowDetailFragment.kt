@@ -47,6 +47,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
     private var favMenu: MenuItem? = null
     private var pendingMenu: MenuItem? = null
     private lateinit var lastChapterAdapter: ArrayAdapter<String>
+    private lateinit var listAdapter: ShowDetailBottomSheetListsAdapter
 
     private val binding get() = _binding!!
 
@@ -62,6 +63,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
 
         setShowMenu()
 
+        listAdapter = ShowDetailBottomSheetListsAdapter(this)
         lastChapterAdapter = ArrayAdapter<String>(
             requireContext(),
             R.layout.show_chapter_dropdown_item,
@@ -74,6 +76,10 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
             binding.showDetailContainer.visibility = View.VISIBLE
             binding.showDetailLoadingSpinner.visibility = View.GONE
             setShowInfo(show)
+        }
+
+        vm.lists.observe(viewLifecycleOwner) {
+            listAdapter.replaceAll(it)
         }
 
         return binding.root
@@ -328,15 +334,10 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         )
 
         dialog.setContentView(dialogBindings.root)
-        val listAdapter = ShowDetailBottomSheetListsAdapter(this)
         val recyclerLayoutManager = LinearLayoutManager(context)
         dialogBindings.showDetailListSelectorRecycler.apply {
             layoutManager = recyclerLayoutManager
             adapter = listAdapter
-        }
-
-        vm.lists.observe(dialog) {
-            listAdapter.replaceAll(it)
         }
 
         dialog.setCancelable(true)
