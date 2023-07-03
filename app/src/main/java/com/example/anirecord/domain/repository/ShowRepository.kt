@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.anirecord.domain.model.ListCollectionItemModel
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
+import com.example.anirecord.domain.model.ShowProgressListItemModel
 import com.example.anirecord.domain.model.StaffShowListItemModel
 import com.example.anirecord.domain.model.VoiceActorShowsListItemModel
 import com.example.anirecord.graphql.type.MediaSeason
@@ -26,6 +27,8 @@ interface ShowRepository {
     suspend fun togglePending(showDetail: ShowDetailModel)
 
     fun getWatched(): LiveData<List<ShowListItemModel>>
+
+    fun getWatching(): LiveData<List<ShowProgressListItemModel>>
 
     suspend fun searchByQuery(
         query: String,

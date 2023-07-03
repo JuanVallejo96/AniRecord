@@ -32,6 +32,8 @@ import com.example.anirecord.domain.usecase.GetVoiceActorsListUseCase
 import com.example.anirecord.domain.usecase.GetVoiceActorsListUseCaseImpl
 import com.example.anirecord.domain.usecase.GetWatchedUseCase
 import com.example.anirecord.domain.usecase.GetWatchedUseCaseImpl
+import com.example.anirecord.domain.usecase.GetWatchingUseCase
+import com.example.anirecord.domain.usecase.GetWatchingUseCaseImpl
 import com.example.anirecord.domain.usecase.SearchByNameUseCase
 import com.example.anirecord.domain.usecase.SearchByNameUseCaseImpl
 import com.example.anirecord.domain.usecase.ToggleFavouriteUseCase
@@ -154,4 +156,9 @@ abstract class UseCaseModule {
     abstract fun bindGetWatchedUseCase(
         getWatchedUseCase: GetWatchedUseCaseImpl
     ): GetWatchedUseCase
+
+    @Binds
+    abstract fun bindGetWatchingUseCase(
+        getWatchingUseCase: GetWatchingUseCaseImpl
+    ): GetWatchingUseCase
 }

@@ -3,6 +3,7 @@ package com.example.anirecord.domain.model.extensions
 import com.example.anirecord.data.entity.ShowEntity
 import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
+import com.example.anirecord.domain.model.ShowProgressListItemModel
 import com.example.anirecord.domain.model.StaffShowListItemModel
 import com.example.anirecord.domain.model.VoiceActorShowsListItemModel
 import com.example.anirecord.graphql.ShowDetailQuery
@@ -32,6 +33,16 @@ fun ShowEntity.toListModel(): ShowListItemModel {
         id = showId,
         name = name,
         cover = cover,
+    )
+}
+
+fun ShowEntity.toProgressListModel(): ShowProgressListItemModel {
+    return ShowProgressListItemModel(
+        id = showId,
+        name = name,
+        cover = cover,
+        progress = progress ?: 0,
+        totalEpisodes = totalEpisodes,
     )
 }
 
