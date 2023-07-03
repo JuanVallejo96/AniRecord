@@ -2,13 +2,18 @@ package com.example.anirecord.ui.showdetail
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -32,6 +37,7 @@ import java.util.Date
 import java.util.Objects
 import kotlin.properties.Delegates
 
+
 @AndroidEntryPoint
 class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterClickHandler,
     StaffListAdapter.StaffClickHandler,
@@ -40,7 +46,6 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
     private val vm: ShowDetailViewModel by viewModels()
     private var shortAnimationDuration by Delegates.notNull<Int>()
     private var favMenu: MenuItem? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -59,7 +64,6 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
             favMenu?.isVisible = true
             binding.showDetailContainer.visibility = View.VISIBLE
             binding.showDetailLoadingSpinner.visibility = View.GONE
-
             setShowInfo(show)
         }
 
@@ -72,9 +76,59 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
             .placeholder(R.drawable.img_placeholder)
             .into(binding.showDetailCover)
         binding.showDetailTitle.text = show.title
+        val html = Utils.htmlToSpanned(show.description)
+        binding.showDetailDescription.text = html
+
         binding.showDetailDateSeason.text = show.season?.name ?: ""
         binding.showDetailDateYear.text = show.year?.toString() ?: ""
-        val html = Utils.htmlToSpanned(show.description)
+        setProgress(show)
+        setStatus(show)
+        setFavourite(show)
+        setAverageScore(show)
+        setNextEpisode(show)
+        setCharactersAndActors(show)
+        setStaff(show)
+    }
+
+    private fun shouldShowProgress(show: ShowDetailModel): Boolean {
+        val nextEpisodeNumber = show.nextEpisode?.episode
+        if (nextEpisodeNumber == null && show.episodes == null) return false
+        if (nextEpisodeNumber == 1) return false
+        if ((show.episodes != null) && (nextEpisodeNumber != null) && (nextEpisodeNumber > show.episodes)) return false
+
+        return true
+    }
+
+    private fun setProgress(show: ShowDetailModel) {
+        if (shouldShowProgress(show)) {
+            binding.lastChapterLabel.isVisible = true
+            binding.lastChapterDropdown.isVisible = true
+            binding.lastChapterDropdown.adapter = ArrayAdapter(
+                requireContext(),
+                R.layout.show_chapter_dropdown_item,
+                R.id.chapterDropdownItem,
+                vm.arrayEpisodes()
+            )
+            binding.lastChapterDropdown.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        Log.d("yes mama", vm.arrayEpisodes()[position])
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+        } else {
+            binding.lastChapterLabel.isVisible = false
+            binding.lastChapterDropdown.isVisible = false
+        }
+    }
+
+    private fun setStatus(show: ShowDetailModel) {
         val (statusResource, statusLabel) = when (show.status) {
             MediaStatus.RELEASING -> Pair(R.drawable.play, R.string.show_status_releasing)
             MediaStatus.FINISHED -> Pair(R.drawable.check, R.string.show_status_finished)
@@ -87,24 +141,27 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
 
             else -> Pair(R.drawable.question_mark, R.string.show_status_unknown)
         }
+        binding.showDetailStatusLabel.text = getString(statusLabel)
+        binding.showDetailStatusIcon.setImageResource(statusResource)
+    }
 
+    private fun setAverageScore(show: ShowDetailModel) {
+        if (Objects.nonNull(show.averageScore)) {
+            binding.showDetailRatingInfo.visibility = View.VISIBLE
+            binding.showDetailRatingValue.text = show.ratingString
+        }
+    }
+
+    private fun setFavourite(show: ShowDetailModel) {
         val starIcon = if (show.isFavourite) {
             R.drawable.star_filled_white
         } else {
             R.drawable.star_white
         }
         favMenu?.setIcon(starIcon)
+    }
 
-        if (Objects.nonNull(show.averageScore)) {
-            binding.showDetailRatingInfo.visibility = View.VISIBLE
-            binding.showDetailRatingValue.text = show.ratingString
-        }
-
-        binding.showDetailStatusIcon.setImageResource(statusResource)
-        binding.showDetailStatusLabel.text = getString(statusLabel)
-        binding.showDetailDescription.text = html
-
-        // Next episode
+    private fun setNextEpisode(show: ShowDetailModel) {
         if (show.nextEpisode != null) {
             if (show.nextEpisode.episode == 1) {
                 binding.ShowNextEpisode.text = requireContext().getString(
@@ -121,8 +178,9 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         } else {
             binding.ShowNextEpisode.visibility = View.GONE
         }
+    }
 
-        // Characters/Voice Actors
+    private fun setCharactersAndActors(show: ShowDetailModel) {
         if (show.characters.isNotEmpty()) {
             binding.showDetailAllCharactersButton.apply {
                 visibility = View.VISIBLE
@@ -139,8 +197,9 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
                 adapter = listAdapter
             }
         }
+    }
 
-        // Staff
+    private fun setStaff(show: ShowDetailModel) {
         if (show.staff.isNotEmpty()) {
             binding.showDetailAllStaffButton.apply {
                 visibility = View.VISIBLE
@@ -174,7 +233,15 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
                     }
 
                     R.id.add_to_list -> {
-                        showLists()
+                        if (vm.hasLists()) {
+                            showLists()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.has_not_list,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                         true
                     }
 

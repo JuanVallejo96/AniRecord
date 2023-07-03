@@ -1,5 +1,6 @@
 package com.example.anirecord.ui.showdetail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -16,6 +17,7 @@ import com.example.anirecord.domain.usecase.ToggleListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.min
 
 @HiltViewModel
 class ShowDetailViewModel @Inject constructor(
@@ -28,16 +30,20 @@ class ShowDetailViewModel @Inject constructor(
 ) : ViewModel() {
     private val id: Int = ShowDetailFragmentArgs.fromSavedStateHandle(savedStateHandle).showId
     private var _show: ShowDetailModel? = null
+    private var _listsLength: Int = 0
+
     val show: LiveData<ShowDetailModel>
         get() = getShowDetailUseCase(id).map {
             _show = it
             it
         }
+
     val lists: LiveData<List<Pair<ListCollectionItemModel, Boolean>>>
-        get() = show.switchMap { showDetail ->
+        get() = show.switchMap {
             getAllListsUseCase().switchMap { allLists ->
                 getListsContainingShowUseCase(id).map { listsWithShow ->
                     val idsOfListsWithShow = listsWithShow.map(ListCollectionItemModel::id).toSet()
+                    _listsLength = allLists.size
                     allLists.map {
                         Pair(it, idsOfListsWithShow.contains(it.id))
                     }
@@ -59,5 +65,23 @@ class ShowDetailViewModel @Inject constructor(
                 toggleListUseCase(listId, it)
             }
         }
+    }
+
+    fun hasLists(): Boolean = _listsLength > 0
+
+    fun arrayEpisodes(): List<String> {
+        Log.d("next", _show?.nextEpisode?.episode.toString())
+        Log.d("episodes", _show?.episodes.toString())
+        return (0..min(
+            _show?.nextEpisode?.episode ?: Int.MAX_VALUE,
+            _show?.episodes ?: Int.MAX_VALUE
+        ))
+            .map {
+                if (it == 0) { //TODO: move to fragment to use @string
+                    "Not watched"
+                } else {
+                    String.format("Episode %d", it)
+                }
+            }.toList()
     }
 }
