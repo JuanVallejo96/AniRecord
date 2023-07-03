@@ -32,25 +32,26 @@ class ShowRepositoryImpl @Inject constructor(
     private val showDao: ShowDao,
     private val appDispatchers: AppDispatchers,
 ) : ShowRepository {
-    override fun findById(id: Int): LiveData<ShowDetailModel> = liveData {
-        val showDetail = apolloClient.query(ShowDetailQuery(id)).execute().data?.Media!!.toModel()
-        val data = showDao.findById(id)
-        emitSource(
-            data.map { showEntity ->
-                showEntity?.let {
-                    if (it.totalEpisodes != showDetail.episodes) {
-                        it.totalEpisodes = showDetail.episodes
-                        showDao.update(it)
-                    }
-                }
-                showDetail.apply {
-                    progress = showEntity?.progress
-                    isPending = showEntity?.isPending ?: false
-                    isFavourite = showEntity?.isFavourite ?: false
+    override suspend fun findById(id: Int): LiveData<ShowDetailModel> =
+        liveData(appDispatchers.IO) {
+            val showDetail = apolloClient.query(ShowDetailQuery(id))
+                .execute().data?.Media!!.toModel()
+            showDao.getById(id)?.let {
+                if (it.totalEpisodes != showDetail.episodes) {
+                    it.totalEpisodes = showDetail.episodes
+                    showDao.update(it)
                 }
             }
-        )
-    }
+            emitSource(
+                showDao.findById(id).map { showEntity ->
+                    showDetail.apply {
+                        progress = showEntity?.progress
+                        isPending = showEntity?.isPending ?: false
+                        isFavourite = showEntity?.isFavourite ?: false
+                    }
+                }
+            )
+        }
 
     override suspend fun getPopularOnSeason(
         year: Int,
@@ -173,4 +174,19 @@ class ShowRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun updateProgress(showDetail: ShowDetailModel): Unit =
+        withContext(appDispatchers.IO) {
+            var show = showDao.getById(showDetail.id)
+            if (show == null) {
+                show = ShowEntity(
+                    showId = showDetail.id,
+                    name = showDetail.title!!,
+                    cover = showDetail.cover!!,
+                    progress = showDetail.progress!!,
+                )
+                return@withContext showDao.insert(show)
+            }
+            showDao.updateProgress(show.showId, showDetail.progress)
+        }
 }

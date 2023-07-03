@@ -10,7 +10,7 @@ import com.example.anirecord.domain.model.VoiceActorShowsListItemModel
 import com.example.anirecord.graphql.type.MediaSeason
 
 interface ShowRepository {
-    fun findById(id: Int): LiveData<ShowDetailModel>
+    suspend fun findById(id: Int): LiveData<ShowDetailModel>
 
     suspend fun getPopularOnSeason(
         year: Int,
@@ -46,4 +46,6 @@ interface ShowRepository {
     ): Pair<List<VoiceActorShowsListItemModel>, Boolean>?
 
     fun getShowWithLists(showId: Int): LiveData<List<ListCollectionItemModel>>
+
+    suspend fun updateProgress(showDetail: ShowDetailModel)
 }

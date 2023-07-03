@@ -4,14 +4,14 @@ import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.repository.ShowRepository
 import javax.inject.Inject
 
-interface ToggleFavouriteUseCase {
+interface UpdateProgressUseCase {
     suspend operator fun invoke(showDetail: ShowDetailModel)
 }
 
-class ToggleFavouriteUseCaseImpl @Inject constructor(
-    private val showRepository: ShowRepository,
-) : ToggleFavouriteUseCase {
+data class UpdateProgressUseCaseImpl @Inject constructor(
+    private val showRepository: ShowRepository
+) : UpdateProgressUseCase {
     override suspend fun invoke(showDetail: ShowDetailModel) {
-        showRepository.toggleFavourite(showDetail)
+        showRepository.updateProgress(showDetail)
     }
 }

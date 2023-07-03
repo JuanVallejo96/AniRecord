@@ -42,6 +42,9 @@ interface ShowDao {
     @Transaction
     fun getShowWithLists(id: Int): LiveData<List<ShowWithLists>>
 
+    @Query("UPDATE ${Constants.DB_SHOW_TABLE_NAME} SET progress = :progress WHERE showId = :id")
+    fun updateProgress(id: Int, progress: Int?)
+
     @Update
     fun update(show: ShowEntity)
 
