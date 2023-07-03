@@ -29,6 +29,9 @@ interface ShowDao {
     @Query("SELECT * FROM ${Constants.DB_SHOW_TABLE_NAME} WHERE isFavourite = 1")
     fun getFavourites(): LiveData<List<ShowEntity>>
 
+    @Query("SELECT * FROM ${Constants.DB_SHOW_TABLE_NAME} WHERE isPending = 1")
+    fun getPending(): LiveData<List<ShowEntity>>
+
     @Query("SELECT * FROM ${Constants.DB_SHOW_TABLE_NAME} WHERE showId = :id")
     @Transaction
     fun getShowWithLists(id: Int): LiveData<List<ShowWithLists>>

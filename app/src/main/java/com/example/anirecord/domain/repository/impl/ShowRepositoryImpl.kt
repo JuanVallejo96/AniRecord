@@ -78,15 +78,35 @@ class ShowRepositoryImpl @Inject constructor(
                     showId = showDetail.id,
                     name = showDetail.title!!,
                     cover = showDetail.cover!!,
-                    progress = null,
-                    totalEpisodes = null,
-                    isPending = false,
                     isFavourite = true,
                 )
                 return@withContext showDao.insert(show)
             }
 
             show.isFavourite = !show.isFavourite
+            showDao.update(show)
+        }
+
+    override fun getPending(): LiveData<List<ShowListItemModel>> {
+        return showDao.getPending().map { items ->
+            items.map(ShowEntity::toListModel)
+        }
+    }
+
+    override suspend fun togglePending(showDetail: ShowDetailModel): Unit =
+        withContext(appDispatchers.IO) {
+            var show = showDao.getById(showDetail.id)
+            if (show == null) {
+                show = ShowEntity(
+                    showId = showDetail.id,
+                    name = showDetail.title!!,
+                    cover = showDetail.cover!!,
+                    isPending = true,
+                )
+                return@withContext showDao.insert(show)
+            }
+
+            show.isPending = !show.isPending
             showDao.update(show)
         }
 
