@@ -44,6 +44,8 @@ import com.example.anirecord.domain.usecase.TogglePendingUseCase
 import com.example.anirecord.domain.usecase.TogglePendingUseCaseImpl
 import com.example.anirecord.domain.usecase.UpdateListUseCase
 import com.example.anirecord.domain.usecase.UpdateListUseCaseImpl
+import com.example.anirecord.domain.usecase.UpdateProgressUseCase
+import com.example.anirecord.domain.usecase.UpdateProgressUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -161,4 +163,10 @@ abstract class UseCaseModule {
     abstract fun bindGetWatchingUseCase(
         getWatchingUseCase: GetWatchingUseCaseImpl
     ): GetWatchingUseCase
+
+
+    @Binds
+    abstract fun bindUpdateProgressUseCase(
+        updateProgressUseCase: UpdateProgressUseCaseImpl
+    ): UpdateProgressUseCase
 }

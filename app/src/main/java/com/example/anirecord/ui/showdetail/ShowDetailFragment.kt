@@ -46,6 +46,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
     private val vm: ShowDetailViewModel by viewModels()
     private var shortAnimationDuration by Delegates.notNull<Int>()
     private var favMenu: MenuItem? = null
+    private var pendingMenu: MenuItem? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -62,6 +63,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
 
         vm.show.observe(viewLifecycleOwner) { show ->
             favMenu?.isVisible = true
+            pendingMenu?.isVisible = true
             binding.showDetailContainer.visibility = View.VISIBLE
             binding.showDetailLoadingSpinner.visibility = View.GONE
             setShowInfo(show)
@@ -84,6 +86,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         setProgress(show)
         setStatus(show)
         setFavourite(show)
+        setPending(show)
         setAverageScore(show)
         setNextEpisode(show)
         setCharactersAndActors(show)
@@ -150,6 +153,15 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
             binding.showDetailRatingInfo.visibility = View.VISIBLE
             binding.showDetailRatingValue.text = show.ratingString
         }
+    }
+
+    private fun setPending(show: ShowDetailModel) {
+        val bookmarkIcon = if (show.isPending) {
+            R.drawable.bookmark_filled_white
+        } else {
+            R.drawable.bookmark_white
+        }
+        pendingMenu?.setIcon(bookmarkIcon)
     }
 
     private fun setFavourite(show: ShowDetailModel) {
@@ -223,12 +235,18 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.show_detail_fragment_menu, menu)
                 favMenu = menu.findItem(R.id.showDetailMenuFavourite)
+                pendingMenu = menu.findItem(R.id.showDetailMenuPending)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.showDetailMenuFavourite -> {
                         vm.toggleFavourite()
+                        true
+                    }
+
+                    R.id.showDetailMenuPending -> {
+                        vm.togglePending()
                         true
                     }
 

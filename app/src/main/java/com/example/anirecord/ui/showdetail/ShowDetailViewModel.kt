@@ -14,6 +14,8 @@ import com.example.anirecord.domain.usecase.GetListsContainingShowUseCase
 import com.example.anirecord.domain.usecase.GetShowDetailUseCase
 import com.example.anirecord.domain.usecase.ToggleFavouriteUseCase
 import com.example.anirecord.domain.usecase.ToggleListUseCase
+import com.example.anirecord.domain.usecase.TogglePendingUseCase
+import com.example.anirecord.domain.usecase.UpdateProgressUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,6 +29,8 @@ class ShowDetailViewModel @Inject constructor(
     private val getAllListsUseCase: GetAllListsUseCase,
     private val toggleListUseCase: ToggleListUseCase,
     private val getListsContainingShowUseCase: GetListsContainingShowUseCase,
+    private val togglePending: TogglePendingUseCase,
+    private val updateProgress: UpdateProgressUseCase
 ) : ViewModel() {
     private val id: Int = ShowDetailFragmentArgs.fromSavedStateHandle(savedStateHandle).showId
     private var _show: ShowDetailModel? = null
@@ -59,10 +63,27 @@ class ShowDetailViewModel @Inject constructor(
         }
     }
 
+    fun togglePending() {
+        viewModelScope.launch {
+            _show?.let {
+                togglePending(it)
+            }
+        }
+    }
+
     fun toggleList(listId: Int) {
         viewModelScope.launch {
             _show?.let {
                 toggleListUseCase(listId, it)
+            }
+        }
+    }
+
+    fun updateProgress(episode: Int) {
+        viewModelScope.launch {
+            _show?.let {
+                it.progress = episode
+                updateProgress(it)
             }
         }
     }

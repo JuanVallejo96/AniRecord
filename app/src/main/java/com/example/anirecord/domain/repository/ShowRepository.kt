@@ -46,4 +46,6 @@ interface ShowRepository {
     ): Pair<List<VoiceActorShowsListItemModel>, Boolean>?
 
     fun getShowWithLists(showId: Int): LiveData<List<ListCollectionItemModel>>
+
+    suspend fun updateProgress(showDetail: ShowDetailModel)
 }

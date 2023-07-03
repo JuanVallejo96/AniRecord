@@ -173,4 +173,19 @@ class ShowRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun updateProgress(showDetail: ShowDetailModel): Unit =
+        withContext(appDispatchers.IO) {
+            var show = showDao.getById(showDetail.id)
+            if (show == null) {
+                show = ShowEntity(
+                    showId = showDetail.id,
+                    name = showDetail.title!!,
+                    cover = showDetail.cover!!,
+                    progress = showDetail.progress!!,
+                )
+                return@withContext showDao.insert(show)
+            }
+            showDao.updateProgress(show.showId, showDetail.progress!!)
+        }
 }
