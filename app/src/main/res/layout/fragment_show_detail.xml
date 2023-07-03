@@ -227,28 +227,61 @@
                 app:layout_constraintTop_toBottomOf="@+id/showDetailCardsBarrier"
                 tools:text="Show Title" />
 
-            <TextView
-                android:id="@+id/last_chapter_label"
-                android:layout_width="0dp"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lastChapterContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="@string/last_chapter_label"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/last_chapter_dropdown"
-                app:layout_constraintStart_toStartOf="@+id/ShowNextEpisode"
-                app:layout_constraintTop_toBottomOf="@+id/ShowNextEpisode" />
-
-            <Spinner
-                android:id="@+id/last_chapter_dropdown"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginEnd="8dp"
-                android:dropDownWidth="wrap_content"
-                android:orientation="horizontal"
-                android:spinnerMode="dropdown"
-                app:layout_constraintBottom_toBottomOf="@+id/last_chapter_label"
                 app:layout_constraintEnd_toEndOf="@+id/ShowNextEpisode"
-                app:layout_constraintTop_toTopOf="@+id/last_chapter_label" />
+                app:layout_constraintStart_toStartOf="@+id/ShowNextEpisode"
+                app:layout_constraintTop_toBottomOf="@+id/ShowNextEpisode">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lastChapterInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="@string/last_chapter_label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/showDetailProgressBar"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/lastChapterDropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/last_chapter_label"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/showDetailProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lastChapterInputLayout"
+                    app:trackCornerRadius="@dimen/border_radius" />
+
+                <TextView
+                    android:id="@+id/showDetailProgressLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/watched_progress_label"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/showDetailProgressBar"
+                    app:layout_constraintStart_toStartOf="@+id/showDetailProgressBar"
+                    app:layout_constraintTop_toBottomOf="@+id/lastChapterInputLayout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/showDetailDescription"
@@ -257,7 +290,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/showDetailTitle"
                 app:layout_constraintStart_toStartOf="@+id/showDetailTitle"
-                app:layout_constraintTop_toBottomOf="@+id/last_chapter_label"
+                app:layout_constraintTop_toBottomOf="@+id/lastChapterContainer"
                 tools:text="@tools:sample/lorem[50]" />
 
             <TextView

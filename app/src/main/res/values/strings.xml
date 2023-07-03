@@ -49,5 +49,8 @@
     <string name="label_watching">Watching</string>
     <string name="show_still_airing_label">Show still airing, watched %1$d</string>
     <string name="watched_progress_label">Watched %1$d / %2$d</string>
+    <string name="not_watched_label">Not watched</string>
+    <string name="episode_n_label">Episode %1$d</string>
     <string name="label_toggle_pending">Toggle Pending</string>
+    <string name="label_empty_watching">Watching is empty</string>
 </resources>

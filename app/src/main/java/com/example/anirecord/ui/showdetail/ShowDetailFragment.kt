@@ -2,7 +2,6 @@ package com.example.anirecord.ui.showdetail
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -47,6 +46,8 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
     private var shortAnimationDuration by Delegates.notNull<Int>()
     private var favMenu: MenuItem? = null
     private var pendingMenu: MenuItem? = null
+    private lateinit var lastChapterAdapter: ArrayAdapter<String>
+
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -60,6 +61,12 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
         setShowMenu()
+
+        lastChapterAdapter = ArrayAdapter<String>(
+            requireContext(),
+            R.layout.show_chapter_dropdown_item,
+            R.id.chapterDropdownItem,
+        )
 
         vm.show.observe(viewLifecycleOwner) { show ->
             favMenu?.isVisible = true
@@ -83,7 +90,7 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
 
         binding.showDetailDateSeason.text = show.season?.name ?: ""
         binding.showDetailDateYear.text = show.year?.toString() ?: ""
-        setProgress(show)
+
         setStatus(show)
         setFavourite(show)
         setPending(show)
@@ -91,43 +98,85 @@ class ShowDetailFragment : Fragment(), CharacterConnectionListAdapter.CharacterC
         setNextEpisode(show)
         setCharactersAndActors(show)
         setStaff(show)
+        setLastChapterAndProgress(show)
     }
 
-    private fun shouldShowProgress(show: ShowDetailModel): Boolean {
-        val nextEpisodeNumber = show.nextEpisode?.episode
-        if (nextEpisodeNumber == null && show.episodes == null) return false
-        if (nextEpisodeNumber == 1) return false
-        if ((show.episodes != null) && (nextEpisodeNumber != null) && (nextEpisodeNumber > show.episodes)) return false
-
-        return true
-    }
-
-    private fun setProgress(show: ShowDetailModel) {
-        if (shouldShowProgress(show)) {
-            binding.lastChapterLabel.isVisible = true
-            binding.lastChapterDropdown.isVisible = true
-            binding.lastChapterDropdown.adapter = ArrayAdapter(
-                requireContext(),
-                R.layout.show_chapter_dropdown_item,
-                R.id.chapterDropdownItem,
-                vm.arrayEpisodes()
-            )
-            binding.lastChapterDropdown.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        Log.d("yes mama", vm.arrayEpisodes()[position])
+    private fun setLastChapterAndProgress(show: ShowDetailModel) {
+        val chapterList = generateChapterList(show.nextEpisode?.episode, show.episodes)
+        binding.lastChapterDropdown.apply {
+            setAdapter(lastChapterAdapter)
+            onItemClickListener = object : AdapterView.OnItemClickListener {
+                override fun onItemClick(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val episode = chapterList[position].first.let {
+                        if (it == 0) {
+                            null
+                        } else {
+                            it
+                        }
                     }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    vm.updateProgress(episode)
                 }
+            }
+        }
+        lastChapterAdapter.clear()
+        lastChapterAdapter.addAll(chapterList.map { it.second })
+        binding.lastChapterDropdown.setText(chapterList[show.progress ?: 0].second, false)
+
+        val showLastSeenChapter = let {
+            val nextEpisodeNumber = show.nextEpisode?.episode
+            when {
+                nextEpisodeNumber == null && show.episodes == null -> false
+                nextEpisodeNumber == 1 -> false
+                (show.episodes != null) && (nextEpisodeNumber != null) && (nextEpisodeNumber > show.episodes) -> false
+                else -> true
+            }
+        }
+
+        binding.lastChapterContainer.isVisible = showLastSeenChapter
+
+        if (showLastSeenChapter && show.progress != null) {
+            binding.showDetailProgressLabel.isVisible = true
+            if (show.episodes != null && show.progress != 0) {
+                binding.showDetailProgressBar.isVisible = true
+                val percent = (100.0 * show.progress!! / show.episodes).toInt()
+                binding.showDetailProgressBar.progress = percent
+                binding.showDetailProgressLabel.text = requireContext().getString(
+                    R.string.watched_progress_label,
+                    show.progress,
+                    show.episodes
+                )
+            } else {
+                binding.showDetailProgressBar.isVisible = false
+                binding.showDetailProgressLabel.text = requireContext().getString(
+                    R.string.show_still_airing_label,
+                    show.progress,
+                )
+            }
         } else {
-            binding.lastChapterLabel.isVisible = false
-            binding.lastChapterDropdown.isVisible = false
+            binding.showDetailProgressBar.isVisible = false
+            binding.showDetailProgressLabel.isVisible = false
+        }
+    }
+
+    private fun generateChapterList(
+        nextEpisode: Int?,
+        episodes: Int?
+    ): List<Pair<Int, String>> {
+        val selectableEpisodes =
+            Integer.min(nextEpisode ?: Int.MAX_VALUE, episodes ?: Int.MAX_VALUE)
+        if (Int.MAX_VALUE == selectableEpisodes) return listOf()
+        return (0..selectableEpisodes).map {
+            val label = if (it == 0) {
+                requireContext().getString(R.string.not_watched_label)
+            } else {
+                requireContext().getString(R.string.episode_n_label, it)
+            }
+            Pair(it, label)
         }
     }
 

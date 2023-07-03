@@ -1,6 +1,5 @@
 package com.example.anirecord.ui.showdetail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -19,7 +18,6 @@ import com.example.anirecord.domain.usecase.UpdateProgressUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.min
 
 @HiltViewModel
 class ShowDetailViewModel @Inject constructor(
@@ -55,11 +53,9 @@ class ShowDetailViewModel @Inject constructor(
             }
         }
 
-    fun toggleFavourite() {
-        viewModelScope.launch {
-            _show?.let {
-                toggleFavouriteUseCase(it)
-            }
+    fun toggleFavourite() = viewModelScope.launch {
+        _show?.let {
+            toggleFavouriteUseCase(it)
         }
     }
 
@@ -71,15 +67,13 @@ class ShowDetailViewModel @Inject constructor(
         }
     }
 
-    fun toggleList(listId: Int) {
-        viewModelScope.launch {
-            _show?.let {
-                toggleListUseCase(listId, it)
-            }
+    fun toggleList(listId: Int) = viewModelScope.launch {
+        _show?.let {
+            toggleListUseCase(listId, it)
         }
     }
 
-    fun updateProgress(episode: Int) {
+    fun updateProgress(episode: Int?) {
         viewModelScope.launch {
             _show?.let {
                 it.progress = episode
@@ -89,20 +83,4 @@ class ShowDetailViewModel @Inject constructor(
     }
 
     fun hasLists(): Boolean = _listsLength > 0
-
-    fun arrayEpisodes(): List<String> {
-        Log.d("next", _show?.nextEpisode?.episode.toString())
-        Log.d("episodes", _show?.episodes.toString())
-        return (0..min(
-            _show?.nextEpisode?.episode ?: Int.MAX_VALUE,
-            _show?.episodes ?: Int.MAX_VALUE
-        ))
-            .map {
-                if (it == 0) { //TODO: move to fragment to use @string
-                    "Not watched"
-                } else {
-                    String.format("Episode %d", it)
-                }
-            }.toList()
-    }
 }
