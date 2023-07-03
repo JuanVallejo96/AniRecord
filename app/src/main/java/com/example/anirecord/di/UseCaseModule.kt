@@ -12,6 +12,8 @@ import com.example.anirecord.domain.usecase.GetFavouritesUseCase
 import com.example.anirecord.domain.usecase.GetFavouritesUseCaseImpl
 import com.example.anirecord.domain.usecase.GetListsContainingShowUseCase
 import com.example.anirecord.domain.usecase.GetListsContainingShowUseCaseImpl
+import com.example.anirecord.domain.usecase.GetPendingUseCase
+import com.example.anirecord.domain.usecase.GetPendingUseCaseImpl
 import com.example.anirecord.domain.usecase.GetPopularUseCase
 import com.example.anirecord.domain.usecase.GetPopularUseCaseImpl
 import com.example.anirecord.domain.usecase.GetShowDetailUseCase
@@ -34,6 +36,8 @@ import com.example.anirecord.domain.usecase.ToggleFavouriteUseCase
 import com.example.anirecord.domain.usecase.ToggleFavouriteUseCaseImpl
 import com.example.anirecord.domain.usecase.ToggleListUseCase
 import com.example.anirecord.domain.usecase.ToggleListUseCaseImpl
+import com.example.anirecord.domain.usecase.TogglePendingUseCase
+import com.example.anirecord.domain.usecase.TogglePendingUseCaseImpl
 import com.example.anirecord.domain.usecase.UpdateListUseCase
 import com.example.anirecord.domain.usecase.UpdateListUseCaseImpl
 import dagger.Binds
@@ -133,4 +137,14 @@ abstract class UseCaseModule {
     abstract fun bindGetListsContainingShowUseCase(
         getListsContainingShowUseCase: GetListsContainingShowUseCaseImpl
     ): GetListsContainingShowUseCase
+
+    @Binds
+    abstract fun bindGetPendingUseCase(
+        getPendingUseCase: GetPendingUseCaseImpl
+    ): GetPendingUseCase
+
+    @Binds
+    abstract fun bindTogglePendingUseCase(
+        togglePendingUseCase: TogglePendingUseCaseImpl
+    ): TogglePendingUseCase
 }

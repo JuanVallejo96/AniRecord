@@ -15,6 +15,11 @@
             android:title="@string/label_favourites" />
 
         <item
+            android:id="@+id/pendingFragment"
+            android:icon="@drawable/bookmark"
+            android:title="@string/label_pending" />
+
+        <item
             android:id="@+id/listCollectionFragment"
             android:icon="@drawable/list"
             android:title="@string/label_list_collection" />

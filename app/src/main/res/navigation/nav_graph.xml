@@ -44,6 +44,18 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/pendingFragment"
+        android:name="com.example.anirecord.ui.pending.PendingFragment"
+        android:label="@string/label_pending"
+        tools:layout="@layout/fragment_pending">
+
+        <action
+            android:id="@+id/navToDetail"
+            app:destination="@id/showDetailFragment" />
+
+    </fragment>
+
 
     <fragment
         android:id="@+id/listCollectionFragment"
