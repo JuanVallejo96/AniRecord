@@ -1,0 +1,10 @@
+query SeasonPopular($page: Int!, $year: Int!, $season: MediaSeason!) {
+    Page(page: $page, perPage: 40) {
+        pageInfo {
+            hasNextPage
+        }
+        media(type: ANIME, isAdult: false, seasonYear: $year, season: $season, sort: [POPULARITY_DESC]) {
+            ...ShowListItemFragment
+        }
+    }
+}

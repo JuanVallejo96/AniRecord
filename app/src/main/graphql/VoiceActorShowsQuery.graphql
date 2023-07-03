@@ -1,0 +1,22 @@
+query VoiceActorShows($staffId: Int!, $page: Int!) {
+    Staff(id: $staffId) {
+        characters(page: $page, sort: RELEVANCE, perPage: 40) {
+            pageInfo {
+                hasNextPage
+            }
+            edges {
+                node {
+                    name {
+                        full
+                    }
+                    image {
+                        large
+                    }
+                }
+                media {
+                    ...ShowListItemFragment
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/homeFragment"
+            android:icon="@android:drawable/ic_menu_today"
+            android:title="@string/label_home" />
+
+        <item
+            android:id="@+id/favouritesFragment"
+            android:icon="@drawable/star_filled_white"
+            android:title="@string/label_favourites" />
+
+        <item
+            android:id="@+id/watchedFragment"
+            android:icon="@drawable/check_circle"
+            android:title="@string/label_watched" />
+
+        <item
+            android:id="@+id/watchingFragment"
+            android:icon="@drawable/track_changes"
+            android:title="@string/label_watching" />
+
+        <item
+            android:id="@+id/pendingFragment"
+            android:icon="@drawable/bookmark"
+            android:title="@string/label_pending" />
+
+        <item
+            android:id="@+id/listCollectionFragment"
+            android:icon="@drawable/list"
+            android:title="@string/label_list_collection" />
+    </group>
+</menu>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/showDetailMenuFavourite"
+        android:icon="@drawable/star_white"
+        android:title="@string/label_toggle_favourite"
+        app:showAsAction="ifRoom"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/showDetailMenuPending"
+        android:icon="@drawable/bookmark_white"
+        android:title="@string/label_toggle_pending"
+        app:showAsAction="ifRoom"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/add_to_list"
+        android:title="@string/add_to_list"
+        app:showAsAction="never"
+        android:visible="true" />
+</menu>

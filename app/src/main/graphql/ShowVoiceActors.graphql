@@ -1,0 +1,31 @@
+query ShowVoiceActors($showId: Int!, $page: Int!) {
+    Media(id: $showId) {
+        characters(sort: [ROLE, RELEVANCE], page: $page, perPage: 40) {
+            pageInfo {
+                hasNextPage
+            }
+            edges {
+                node {
+                    name {
+                        full
+                    }
+                    image {
+                        large
+                    }
+                }
+                voiceActorRoles(language: JAPANESE, sort: RELEVANCE) {
+                    voiceActor {
+                        id
+                        name {
+                            full
+                        }
+                        image {
+                            large
+                        }
+                    }
+                    roleNotes
+                }
+            }
+        }
+    }
+}

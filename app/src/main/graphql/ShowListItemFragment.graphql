@@ -1,0 +1,10 @@
+fragment ShowListItemFragment on Media {
+  id
+  title {
+    romaji
+    english
+  }
+  coverImage {
+    large
+  }
+}

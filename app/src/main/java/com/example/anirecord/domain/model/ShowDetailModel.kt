@@ -1,0 +1,26 @@
+package com.example.anirecord.domain.model
+
+import com.example.anirecord.graphql.ShowDetailQuery
+import com.example.anirecord.graphql.type.MediaSeason
+import com.example.anirecord.graphql.type.MediaStatus
+
+data class ShowDetailModel(
+    val id: Int,
+    val title: String?,
+    val cover: String?,
+    val description: String?,
+    val averageScore: Int?,
+    val episodes: Int?,
+    val season: MediaSeason?,
+    val status: MediaStatus?,
+    val year: Int?,
+    val nextEpisode: ShowDetailQuery.NextAiringEpisode?,
+    val characters: List<CharacterConnectionModel>,
+    val staff: List<ShowStaffListItemModel>,
+    var progress: Int? = null,
+    var isPending: Boolean = false,
+    var isFavourite: Boolean = false,
+) {
+    val ratingString: String
+        get() = (this.averageScore?.let { (it / 10).toString() } ?: "??") + " / 10"
+}
