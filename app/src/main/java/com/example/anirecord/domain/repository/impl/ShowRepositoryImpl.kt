@@ -35,7 +35,15 @@ class ShowRepositoryImpl @Inject constructor(
         val data = showDao.findById(id)
         emitSource(
             data.map { showEntity ->
+                showEntity?.let {
+                    if (it.totalEpisodes != showDetail.episodes) {
+                        it.totalEpisodes = showDetail.episodes
+                        showDao.update(it)
+                    }
+                }
                 showDetail.apply {
+                    progress = showEntity?.progress
+                    isPending = showEntity?.isPending ?: false
                     isFavourite = showEntity?.isFavourite ?: false
                 }
             }
@@ -70,7 +78,9 @@ class ShowRepositoryImpl @Inject constructor(
                     showId = showDetail.id,
                     name = showDetail.title!!,
                     cover = showDetail.cover!!,
-                    progress = 0,
+                    progress = null,
+                    totalEpisodes = null,
+                    isPending = false,
                     isFavourite = true,
                 )
                 return@withContext showDao.insert(show)

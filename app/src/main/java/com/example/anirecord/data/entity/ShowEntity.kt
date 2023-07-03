@@ -13,8 +13,10 @@ data class ShowEntity(
     val showId: Int,
     val name: String,
     val cover: String,
-    var progress: Int?,
-    var isFavourite: Boolean,
+    var progress: Int? = null,
+    var totalEpisodes: Int? = null,
+    var isPending: Boolean = false,
+    var isFavourite: Boolean = false,
 )
 
 data class ShowWithLists(

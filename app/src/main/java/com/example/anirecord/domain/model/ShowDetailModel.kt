@@ -17,6 +17,8 @@ data class ShowDetailModel(
     val nextEpisode: ShowDetailQuery.NextAiringEpisode?,
     val characters: List<CharacterConnectionModel>,
     val staff: List<ShowStaffListItemModel>,
+    var progress: Int? = null,
+    var isPending: Boolean = false,
     var isFavourite: Boolean = false,
 ) {
     val ratingString: String
