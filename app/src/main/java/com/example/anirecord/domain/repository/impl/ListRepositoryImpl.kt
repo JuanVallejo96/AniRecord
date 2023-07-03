@@ -3,8 +3,11 @@ package com.example.anirecord.domain.repository.impl
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.anirecord.data.database.ListDao
+import com.example.anirecord.data.database.ShowDao
 import com.example.anirecord.data.entity.ListEntity
+import com.example.anirecord.data.entity.ShowEntity
 import com.example.anirecord.domain.model.ListCollectionItemModel
+import com.example.anirecord.domain.model.ShowDetailModel
 import com.example.anirecord.domain.model.ShowListItemModel
 import com.example.anirecord.domain.repository.ListRepository
 import com.example.anirecord.utils.AppDispatchers
@@ -13,6 +16,7 @@ import javax.inject.Inject
 
 class ListRepositoryImpl @Inject constructor(
     private val listDao: ListDao,
+    private val showDao: ShowDao,
     private val appDispatchers: AppDispatchers,
 ) : ListRepository {
     override fun getAll(): LiveData<List<ListCollectionItemModel>> {
@@ -57,5 +61,25 @@ class ListRepositoryImpl @Inject constructor(
     override suspend fun deleteShowFromList(listId: Int, showId: Int): Unit =
         withContext(appDispatchers.IO) {
             listDao.deleteShowFromList(listId, showId)
+        }
+
+    override suspend fun toggleList(listId: Int, showDetail: ShowDetailModel): Unit =
+        withContext(appDispatchers.IO) {
+            var show = showDao.getById(showDetail.id)
+            if (show == null) {
+                show = ShowEntity(
+                    showId = showDetail.id,
+                    name = showDetail.title!!,
+                    cover = showDetail.cover!!,
+                    progress = null,
+                    isFavourite = false,
+                )
+                showDao.insert(show)
+            }
+            if (listDao.existsShowInList(listId, show.showId)) {
+                deleteShowFromList(listId, show.showId)
+            } else {
+                insertShowIntoList(listId, show.showId)
+            }
         }
 }

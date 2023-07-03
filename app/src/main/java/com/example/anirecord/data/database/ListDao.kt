@@ -30,6 +30,9 @@ interface ListDao {
     @Transaction
     fun findWithShowsById(id: Int): LiveData<ListWithShows>
 
+    @Query("SELECT EXISTS(SELECT * FROM ${Constants.DB_LIST_SHOW_XREFF_TABLE_NAME} WHERE listId = :listId AND showId = :showId)")
+    fun existsShowInList(listId: Int, showId: Int): Boolean
+
     @Query("SELECT * FROM ${Constants.DB_LIST_TABLE_NAME}")
     fun getAll(): LiveData<List<ListEntity>>
 

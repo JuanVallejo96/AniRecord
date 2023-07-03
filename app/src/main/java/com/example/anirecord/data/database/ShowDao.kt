@@ -9,6 +9,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.anirecord.Constants
 import com.example.anirecord.data.entity.ShowEntity
+import com.example.anirecord.data.entity.ShowWithLists
 
 @Dao
 interface ShowDao {
@@ -26,6 +27,9 @@ interface ShowDao {
 
     @Query("SELECT * FROM ${Constants.DB_SHOW_TABLE_NAME} WHERE isFavourite = 1")
     fun getFavourites(): LiveData<List<ShowEntity>>
+
+    @Query("SELECT * FROM ${Constants.DB_SHOW_TABLE_NAME} WHERE showId = :id")
+    fun getShowWithLists(id: Int): LiveData<List<ShowWithLists>>
 
     @Update
     fun update(show: ShowEntity)

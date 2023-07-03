@@ -5,6 +5,12 @@
         android:id="@+id/showDetailMenuFavourite"
         android:icon="@drawable/star_white"
         android:title="@string/label_toggle_favourite"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:visible="false" />
+
+    <item
+        android:id="@+id/add_to_list"
+        android:title="@string/add_to_list"
+        app:showAsAction="never"
+        android:visible="true" />
 </menu>

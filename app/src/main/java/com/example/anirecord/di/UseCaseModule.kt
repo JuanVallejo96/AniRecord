@@ -10,6 +10,8 @@ import com.example.anirecord.domain.usecase.GetAllListsUseCase
 import com.example.anirecord.domain.usecase.GetAllListsUseCaseImpl
 import com.example.anirecord.domain.usecase.GetFavouritesUseCase
 import com.example.anirecord.domain.usecase.GetFavouritesUseCaseImpl
+import com.example.anirecord.domain.usecase.GetListsContainingShowUseCase
+import com.example.anirecord.domain.usecase.GetListsContainingShowUseCaseImpl
 import com.example.anirecord.domain.usecase.GetPopularUseCase
 import com.example.anirecord.domain.usecase.GetPopularUseCaseImpl
 import com.example.anirecord.domain.usecase.GetShowDetailUseCase
@@ -30,6 +32,8 @@ import com.example.anirecord.domain.usecase.SearchByNameUseCase
 import com.example.anirecord.domain.usecase.SearchByNameUseCaseImpl
 import com.example.anirecord.domain.usecase.ToggleFavouriteUseCase
 import com.example.anirecord.domain.usecase.ToggleFavouriteUseCaseImpl
+import com.example.anirecord.domain.usecase.ToggleListUseCase
+import com.example.anirecord.domain.usecase.ToggleListUseCaseImpl
 import com.example.anirecord.domain.usecase.UpdateListUseCase
 import com.example.anirecord.domain.usecase.UpdateListUseCaseImpl
 import dagger.Binds
@@ -119,4 +123,14 @@ abstract class UseCaseModule {
     abstract fun bindDeleteShowFromListUseCase(
         deleteShowFromListUseCase: DeleteShowFromListUseCaseImpl
     ): DeleteShowFromListUseCase
+
+    @Binds
+    abstract fun bindToggleListUseCase(
+        toggleListUseCase: ToggleListUseCaseImpl
+    ): ToggleListUseCase
+
+    @Binds
+    abstract fun bindGetListsContainingShowUseCase(
+        getListsContainingShowUseCase: GetListsContainingShowUseCaseImpl
+    ): GetListsContainingShowUseCase
 }
